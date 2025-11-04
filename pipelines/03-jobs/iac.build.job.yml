@@ -41,9 +41,9 @@ jobs:
       - checkout: self
         path: configurationCheckoutDirectory
       
-      # - ${{ if ne(parameters.patternSettings.patternContext,'internal') }}:
-      #     - checkout: workload
-      #       path: patternCheckoutDirectory
+      - ${{ if ne(parameters.patternSettings.patternContext,'internal') }}:
+          - checkout: workload
+            path: patternCheckoutDirectory
       - ${{ if ne(parameters.patternSettings.configurationPipelineContext,'internal') }}:
           - checkout: release-engine-core
             path: releaseEngineCheckoutDirectory
