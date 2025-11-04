@@ -42,7 +42,7 @@ jobs:
         path: configurationCheckoutDirectory
       
       # - ${{ if ne(parameters.patternSettings.patternContext,'internal') }}:
-      - ${{ if eq('','') }}:
+      - ${{ if eq('s','') }}:
           - checkout: workload
             path: patternCheckoutDirectory
       - ${{ if ne(parameters.patternSettings.configurationPipelineContext,'internal') }}:
