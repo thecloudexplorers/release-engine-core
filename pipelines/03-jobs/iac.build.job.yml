@@ -34,9 +34,8 @@ jobs:
       - ${{ else }}:
           - template: ${{ parameters.patternSettings.configurationFilePath }}/metadata.yml@self
           - name: releaseEngineCheckoutDirectory
-            value: releaseEngineCheckoutDirectory            
-          
-      
+            value: releaseEngineCheckoutDirectory
+
     steps:
 
       - checkout: self
@@ -47,7 +46,7 @@ jobs:
             path: patternCheckoutDirectory
       - ${{ if ne(parameters.patternSettings.configurationPipelineContext,'internal') }}:
           - checkout: release-engine-core
-            path: releaseEngineCheckoutDirectory          
+            path: releaseEngineCheckoutDirectory
 
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
