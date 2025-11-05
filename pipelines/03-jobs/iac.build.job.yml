@@ -18,19 +18,18 @@ jobs:
       # its default alias is self
       - checkout: self
         # path: configurationCheckoutDirectory
-        path: deploymentDirectory/configuration
+        path: checkoutDirectory/configuration
         sparseCheckoutPatterns: |
-          **
-      # *.bicepparam
-      # *.json
-      # **/scripts/**
+          *.bicepparam
+          *.json
+          **/scripts/**
  
       # It is a production pipeline (not a test pipeline)
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'false') }}:
 
           # If it is a production pipeline, the release engine will always be in a different repo than the configuration
           - checkout: release-engine-core
-            path: deploymentDirectory/common
+            path: commonCheckoutDirectory
             sparseCheckoutPatterns: |
               **
               !tests/**
@@ -42,7 +41,7 @@ jobs:
               
               # Checkout the pattern from independent repository
               - checkout: pattern
-                path: deploymentDirectory/iac
+                path: checkoutDirectory/iac
                 sparseCheckoutPatterns: |
                   *.bicep
                   # !tests/**
@@ -56,7 +55,7 @@ jobs:
 
               # Checkout the pattern from release-engine-core repository
               - checkout: self
-                path: deploymentDirectory/iac
+                path: checkoutDirectory/iac
                 sparseCheckoutPatterns: |
                   *.bicep
                   # !tests/**
@@ -71,7 +70,7 @@ jobs:
               
               # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
               - checkout: self
-                path: deploymentDirectory/iac
+                path: checkoutDirectory/iac
                 sparseCheckoutPatterns: |
                   *.bicep
                   # !tests/**
@@ -80,7 +79,7 @@ jobs:
 
               # If the pattern is external, the release engine is in a different repo than the configuration
               - checkout: release-engine-core
-                path: checkoutDirectory/common
+                path: commonCheckoutDirectory
                 sparseCheckoutPatterns: |
                   **
                   !tests/**
@@ -92,7 +91,7 @@ jobs:
               
               # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
               - checkout: self
-                path: deploymentDirectory/iac
+                path: checkoutDirectory/iac
                 sparseCheckoutPatterns: |
                   *.bicep
                   # !tests/**
@@ -101,7 +100,7 @@ jobs:
 
               # If the pattern is external, the release engine is in a different repo than the configuration
               - checkout: self
-                path: checkoutDirectory/common
+                path: commonCheckoutDirectory
                 sparseCheckoutPatterns: |
                   **
                   !tests/**
@@ -119,26 +118,26 @@ jobs:
         displayName: Debug - Display Settings and Environment Variables
         condition: eq( variables['System.Debug'], 'true' )
 
-      # - task: CopyFiles@2
-      #   displayName: Copying common content
-      #   inputs:
-      #     SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common
-      #     Contents: |
-      #       **
-      #       !tests/**
-      #       !examples/**
-      #       !pipelines/**
-      #     TargetFolder: $(build.artifactstagingdirectory)/common
-      #     flattenFolders: false
+      - task: CopyFiles@2
+        displayName: Copying common content
+        inputs:
+          SourceFolder: $(Pipeline.Workspace)/commonCheckoutDirectory
+          Contents: |
+            **
+            !tests/**
+            !examples/**
+            !pipelines/**
+          TargetFolder: $(build.artifactstagingdirectory)/common
+          flattenFolders: false
 
       - task: PublishPipelineArtifact@1
         inputs:
-          targetPath: $(Pipeline.Workspace)/checkoutDirectory/common
+          targetPath: $(Pipeline.Workspace)/commonCheckoutDirectory
           artifact: common
           publishLocation: pipeline
 
       - task: PublishPipelineArtifact@1
         inputs:
-          targetPath: $(Pipeline.Workspace)/deploymentDirectory
+          targetPath: $(Pipeline.Workspace)/checkoutDirectory
           artifact: $(deploymentPattern)
           publishLocation: pipeline
