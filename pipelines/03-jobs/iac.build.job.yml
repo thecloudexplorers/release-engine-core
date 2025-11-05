@@ -20,9 +20,10 @@ jobs:
         # path: configurationCheckoutDirectory
         path: deploymentDirectory/configuration
         sparseCheckoutPatterns: |
-          *.bicepparam
-          *.json
-          **/scripts/**
+          **
+      # *.bicepparam
+      # *.json
+      # **/scripts/**
  
       # It is a production pipeline (not a test pipeline)
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'false') }}:
