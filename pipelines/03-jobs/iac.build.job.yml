@@ -8,84 +8,7 @@ jobs:
   - job: ${{ variables.deploymentPattern }}_build
     displayName: Building IaC Artifacts
     variables:
-
-      # - name: configurationCheckoutDirectory
-      #   value: configurationCheckoutDirectory
-
-
-      # - ${{ if and(eq(parameters.patternSettings.patternContext,'internal'), eq(parameters.patternSettings.configurationPipelineContext,'internal'))}}:
-      #     - name: patternCheckoutDirectory
-      #       value: configurationCheckoutDirectory
-      # - ${{ elseif and(eq(parameters.patternSettings.patternContext,'internal'), ne(parameters.patternSettings.configurationPipelineContext,'internal'))}}:
-      #     - name: patternCheckoutDirectory
-      #       value: releaseEngineCheckoutDirectory
-      # - ${{ elseif and(ne(parameters.patternSettings.patternContext,'internal'), eq(parameters.patternSettings.configurationPipelineContext,'internal'))}}:
-      #     - name: patternCheckoutDirectory
-      #       value: configurationCheckoutDirectory
-      # - ${{ else }}:
-      #     - name: patternCheckoutDirectory
-      #       value: patternCheckoutDirectory
-
-      # # The configuration pipeline is inside the pattern repository or release-engine-core repository
-      # - ${{ if eq(parameters.patternSettings.deploymentSettings.configurationPipelineContext,'internal')}}:
-          
-      #     # # The pattern is an internal pattern on release-engine-core repository 
-      #     # - ${{ if eq(parameters.patternSettings.patternContext,'internal')}}:
-      #     - name: patternCheckoutDirectory
-      #       value: configurationCheckoutDirectory
-
-      #     - name: releaseEngineCheckoutDirectory
-      #       value: configurationCheckoutDirectory
-
-      #     # # The pattern is on its own repository, default if the option is omitted
-      #     # - ${{ if ne(parameters.patternSettings.patternContext,'internal')}}:
-      #     # - name: patternCheckoutDirectory
-      #     #   value: configurationCheckoutDirectory
-
-      # # The configuration pipeline is in its own repository
-      # - ${{ if ne(parameters.patternSettings.deploymentSettings.configurationPipelineContext,'internal')}}:
-
-      #     # The pattern is an internal pattern on release-engine-core repository
-      #     - ${{ if eq(parameters.patternSettings.patternContext,'internal')}}:
-      #         - name: patternCheckoutDirectory
-      #           value: patternCheckoutDirectory1
-
-      #     # The pattern is on its own repository, default if the option is omitted
-      #     - ${{ if ne(parameters.patternSettings.patternContext,'internal')}}:
-      #         - name: patternCheckoutDirectory
-      #           value: patternCheckoutDirectory
-
-      #         - name: releaseEngineCheckoutDirectory
-      #           value: releaseEngineCheckoutDirectory2
-
-
-      # - ${{ if and(eq(parameters.patternSettings.patternContext,'internal'), eq(parameters.patternSettings.configurationPipelineContext,'internal'))}}:
-      #     - name: patternCheckoutDirectory
-      #       value: configurationCheckoutDirectory
-      # - ${{ elseif and(eq(parameters.patternSettings.patternContext,'internal'), ne(parameters.patternSettings.configurationPipelineContext,'internal'))}}:
-      #     - name: patternCheckoutDirectory
-      #       value: releaseEngineCheckoutDirectory
-      # - ${{ elseif and(ne(parameters.patternSettings.patternContext,'internal'), eq(parameters.patternSettings.configurationPipelineContext,'internal'))}}:
-      #     - name: patternCheckoutDirectory
-      #       value: configurationCheckoutDirectory
-      # - ${{ else }}:
-      #     - name: patternCheckoutDirectory
-      #       value: patternCheckoutDirectory
-
-
-      # - ${{ if eq(parameters.patternSettings.configurationPipelineContext,'internal') }}:
-      #     - template: ${{ parameters.patternSettings.configurationFilePath }}/metadata.yml
-      #     - name: releaseEngineCheckoutDirectory
-      #       value: configurationCheckoutDirectory
-          
-
-      # - ${{ else }}:
-      #     - template: ${{ parameters.patternSettings.configurationFilePath }}/metadata.yml@self
-      #     - name: releaseEngineCheckoutDirectory
-      #       value: releaseEngineCheckoutDirectory
-
       - template: ${{ parameters.deploymentSettings.configurationFilePath }}/metadata.yml@self
-
 
     steps:
 
@@ -95,22 +18,18 @@ jobs:
       # its default alias is self
       - checkout: self
         # path: configurationCheckoutDirectory
-        path: checkoutDirectory/configuration
+        path: deploymentDirectory/configuration
         sparseCheckoutPatterns: |
           *.bicepparam
           *.json
           **/scripts/**
-
-
-
-
-      
+ 
       # It is a production pipeline (not a test pipeline)
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'false') }}:
 
           # If it is a production pipeline, the release engine will always be in a different repo than the configuration
           - checkout: release-engine-core
-            path: checkoutDirectory/common
+            path: deploymentDirectory/common
             sparseCheckoutPatterns: |
               **
               !tests/**
@@ -122,7 +41,7 @@ jobs:
               
               # Checkout the pattern from independent repository
               - checkout: pattern
-                path: checkoutDirectory/iac
+                path: deploymentDirectory/iac
                 sparseCheckoutPatterns: |
                   *.bicep
                   # !tests/**
@@ -136,13 +55,12 @@ jobs:
 
               # Checkout the pattern from release-engine-core repository
               - checkout: self
-                path: checkoutDirectory/iac
+                path: deploymentDirectory/iac
                 sparseCheckoutPatterns: |
                   *.bicep
                   # !tests/**
                   # !examples/**
                   # !deployment-pattern.yml
-
 
       # It is a test pipeline (not production)
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'true') }}:
@@ -152,7 +70,7 @@ jobs:
               
               # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
               - checkout: self
-                path: checkoutDirectory/iac
+                path: deploymentDirectory/iac
                 sparseCheckoutPatterns: |
                   *.bicep
                   # !tests/**
@@ -173,7 +91,7 @@ jobs:
               
               # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
               - checkout: self
-                path: checkoutDirectory/iac
+                path: deploymentDirectory/iac
                 sparseCheckoutPatterns: |
                   *.bicep
                   # !tests/**
@@ -189,54 +107,6 @@ jobs:
                   !examples/**
                   !pipelines/**                  
 
-
-
-
-      # If configuration origin is configurationRepo or empty 
-
-
-      # - checkout: self
-      #   path: configurationCheckoutDirectory
-      
-
-      # - ${{ if ne(parameters.patternSettings.deploymentSettings.configurationPipelineContext,'internal') }}:
-      #     - checkout: release-engine-core
-      #       path: releaseEngineCheckoutDirectory
-
-      # # - ${{ if ne(parameters.patternSettings.patternContext,'internal') }}:
-      # #     - checkout: workload
-      # #       path: patternCheckoutDirectory
-
-
-      # # The configuration pipeline is inside the pattern repository or release-engine-core repository
-      # - ${{ if eq(parameters.patternSettings.deploymentSettings.configurationPipelineContext,'internal')}}:
-          
-      #     # The pattern is an internal pattern on release-engine-core repository 
-      #     - ${{ if eq(parameters.patternSettings.patternContext,'internal')}}:
-      #         # nothing to checkout, only configuration repo (self)
-      #         # - checkout: release-engine-core
-      #         #   path: releaseEngineCheckoutDirectory
-
-      #     # The pattern is on its own repository, default if the option is omitted
-      #     - ${{ if ne(parameters.patternSettings.patternContext,'internal')}}:
-      #         - checkout: release-engine-core
-      #           path: releaseEngineCheckoutDirectory
-
-      # # The configuration pipeline is in its own repository
-      # - ${{ if ne(parameters.patternSettings.deploymentSettings.configurationPipelineContext,'internal')}}:
-
-      #     # The pattern is an internal pattern on release-engine-core repository
-      #     - ${{ if eq(parameters.patternSettings.patternContext,'internal')}}:
-      #         - checkout: release-engine-core
-      #           path: releaseEngineCheckoutDirectory
-
-      #     # The pattern is on its own repository, default if the option is omitted
-      #     - ${{ if ne(parameters.patternSettings.patternContext,'internal')}}:
-      #         - checkout: release-engine-core
-      #           path: releaseEngineCheckoutDirectory
-      #         # - checkout: workloads
-
-
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
           Write-Host "\nParameters:"
@@ -249,50 +119,16 @@ jobs:
         condition: eq( variables['System.Debug'], 'true' )
 
       # - task: CopyFiles@2
-      #   displayName: Copying content from Configuration repository
+      #   displayName: Copying common content
       #   inputs:
-      #     SourceFolder: $(Pipeline.Workspace)/configurationCheckoutDirectory/${{ parameters.patternSettings.configurationFilePath }}
-      #     Contents: |
-      #       **
-      #       !pipelines/**
-      #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
-      #     flattenFolders: false
-
-      # - task: CopyFiles@2
-      #   displayName: Copying Deployment Pattern content
-      #   inputs:
-      #     SourceFolder: $(Pipeline.Workspace)/$(patternCheckoutDirectory)/${{ parameters.patternSettings.patternArtifactsPath }}
+      #     SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common
       #     Contents: |
       #       **
       #       !tests/**
       #       !examples/**
-      #       !deployment-pattern.yml
-      #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)
+      #       !pipelines/**
+      #     TargetFolder: $(build.artifactstagingdirectory)/common
       #     flattenFolders: false
-
-      - task: CopyFiles@2
-        displayName: Copying common content
-        inputs:
-          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common
-          Contents: |
-            **
-            !tests/**
-            !examples/**
-            !pipelines/**
-          TargetFolder: $(build.artifactstagingdirectory)/common
-          flattenFolders: false
-
-      # - task: PublishPipelineArtifact@1
-      #   inputs:
-      #     targetPath: $(build.artifactstagingdirectory)/$(deploymentPattern)
-      #     artifact: $(deploymentPattern)
-      #     publishLocation: pipeline
-
-      # - task: PublishPipelineArtifact@1
-      #   inputs:
-      #     targetPath: $(build.artifactstagingdirectory)/common
-      #     artifact: common
-      #     publishLocation: pipeline
 
       - task: PublishPipelineArtifact@1
         inputs:
@@ -302,6 +138,6 @@ jobs:
 
       - task: PublishPipelineArtifact@1
         inputs:
-          targetPath: $(Pipeline.Workspace)/checkoutDirectory
+          targetPath: $(Pipeline.Workspace)/deploymentDirectory
           artifact: $(deploymentPattern)
           publishLocation: pipeline
