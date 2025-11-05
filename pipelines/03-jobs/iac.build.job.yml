@@ -46,7 +46,7 @@ jobs:
           # The pattern is an internal pattern on release-engine-core repository
           - ${{ if eq(parameters.patternSettings.patternContext,'internal')}}:
               - name: patternCheckoutDirectory
-                value: releaseEngineCheckoutDirectory
+                value: releaseEngineCheckoutDirectory1
 
           # The pattern is on its own repository, default if the option is omitted
           - ${{ if ne(parameters.patternSettings.patternContext,'internal')}}:
@@ -54,7 +54,7 @@ jobs:
                 value: patternCheckoutDirectory
 
               - name: releaseEngineCheckoutDirectory
-                value: releaseEngineCheckoutDirectory
+                value: releaseEngineCheckoutDirectory2
 
 
       # - ${{ if and(eq(parameters.patternSettings.patternContext,'internal'), eq(parameters.patternSettings.configurationPipelineContext,'internal'))}}:
