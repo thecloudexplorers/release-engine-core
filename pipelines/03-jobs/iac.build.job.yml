@@ -97,8 +97,11 @@ jobs:
         # path: configurationCheckoutDirectory
         path: checkoutDirectory/configuration
         sparseCheckoutPatterns: |
-          **
-          !pipelines/**
+          *.bicepparam
+          *.json
+          **/scripts/**
+
+
 
 
       
@@ -119,12 +122,12 @@ jobs:
               
               # Checkout the pattern from independent repository
               - checkout: pattern
-                path: checkoutDirectory/pattern
+                path: checkoutDirectory/iac
                 sparseCheckoutPatterns: |
-                  **
-                  !tests/**
-                  !examples/**
-                  !deployment-pattern.yml
+                  *.bicep
+                  # !tests/**
+                  # !examples/**
+                  # !deployment-pattern.yml
 
         # Pattern is internal from release-engine-core
 
@@ -133,12 +136,12 @@ jobs:
 
               # Checkout the pattern from release-engine-core repository
               - checkout: self
-                path: checkoutDirectory/pattern
+                path: checkoutDirectory/iac
                 sparseCheckoutPatterns: |
-                  **
-                  !tests/**
-                  !examples/**
-                  !deployment-pattern.yml
+                  *.bicep
+                  # !tests/**
+                  # !examples/**
+                  # !deployment-pattern.yml
 
 
       # It is a test pipeline (not production)
@@ -149,12 +152,12 @@ jobs:
               
               # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
               - checkout: self
-                path: checkoutDirectory/pattern
+                path: checkoutDirectory/iac
                 sparseCheckoutPatterns: |
-                  **
-                  !tests/**
-                  !examples/**
-                  !deployment-pattern.yml
+                  *.bicep
+                  # !tests/**
+                  # !examples/**
+                  # !deployment-pattern.yml
 
               # If the pattern is external, the release engine is in a different repo than the configuration
               - checkout: release-engine-core
@@ -170,12 +173,12 @@ jobs:
               
               # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
               - checkout: self
-                path: checkoutDirectory/pattern
+                path: checkoutDirectory/iac
                 sparseCheckoutPatterns: |
-                  **
-                  !tests/**
-                  !examples/**
-                  !deployment-pattern.yml
+                  *.bicep
+                  # !tests/**
+                  # !examples/**
+                  # !deployment-pattern.yml
 
               # If the pattern is external, the release engine is in a different repo than the configuration
               - checkout: self
