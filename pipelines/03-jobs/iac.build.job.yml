@@ -129,3 +129,9 @@ jobs:
           targetPath: $(Pipeline.Workspace)/checkoutDirectory
           artifact: $(deploymentPattern)
           publishLocation: pipeline
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: $(Pipeline.Workspace)/checkoutDirectory/configuration
+          artifact: config
+          publishLocation: pipeline
