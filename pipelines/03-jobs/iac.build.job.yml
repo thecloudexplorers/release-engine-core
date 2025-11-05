@@ -25,7 +25,7 @@ jobs:
       #       value: patternCheckoutDirectory
 
       # The configuration pipeline is inside the pattern repository or release-engine-core repository
-      - ${{ if eq(parameters.patternSettings.configurationPipelineContext,'internal')}}:
+      - ${{ if eq(parameters.patternSettings.deploymentSettings.configurationPipelineContext,'internal')}}:
           
           # # The pattern is an internal pattern on release-engine-core repository 
           # - ${{ if eq(parameters.patternSettings.patternContext,'internal')}}:
@@ -41,7 +41,7 @@ jobs:
           #   value: configurationCheckoutDirectory
 
       # The configuration pipeline is in its own repository
-      - ${{ if ne(parameters.patternSettings.configurationPipelineContext,'internal')}}:
+      - ${{ if ne(parameters.patternSettings.deploymentSettings.configurationPipelineContext,'internal')}}:
 
           # The pattern is an internal pattern on release-engine-core repository
           - ${{ if eq(parameters.patternSettings.patternContext,'internal')}}:
@@ -88,7 +88,7 @@ jobs:
         path: configurationCheckoutDirectory
       
 
-      - ${{ if ne(parameters.patternSettings.configurationPipelineContext,'internal') }}:
+      - ${{ if ne(parameters.patternSettings.deploymentSettings.configurationPipelineContext,'internal') }}:
           - checkout: release-engine-core
             path: releaseEngineCheckoutDirectory
 
@@ -98,7 +98,7 @@ jobs:
 
 
       # The configuration pipeline is inside the pattern repository or release-engine-core repository
-      - ${{ if eq(parameters.patternSettings.configurationPipelineContext,'internal')}}:
+      - ${{ if eq(parameters.patternSettings.deploymentSettings.configurationPipelineContext,'internal')}}:
           
           # The pattern is an internal pattern on release-engine-core repository 
           - ${{ if eq(parameters.patternSettings.patternContext,'internal')}}:
@@ -112,7 +112,7 @@ jobs:
                 path: releaseEngineCheckoutDirectory
 
       # The configuration pipeline is in its own repository
-      - ${{ if ne(parameters.patternSettings.configurationPipelineContext,'internal')}}:
+      - ${{ if ne(parameters.patternSettings.deploymentSettings.configurationPipelineContext,'internal')}}:
 
           # The pattern is an internal pattern on release-engine-core repository
           - ${{ if eq(parameters.patternSettings.patternContext,'internal')}}:
