@@ -115,7 +115,7 @@ jobs:
               !pipelines/**
 
         # Pattern is external from release-engine-core
-          - ${{ if eq(parameters.patternSettings.externalPattern,'true') }}:
+          - ${{ if eq(parameters.patternSettings.isExternalPattern,'true') }}:
               
               # Checkout the pattern from independent repository
               - checkout: pattern
@@ -129,7 +129,7 @@ jobs:
         # Pattern is internal from release-engine-core
 
           # Pattern is external from release-engine-core
-          - ${{ if eq(parameters.patternSettings.externalPattern,'false') }}:
+          - ${{ if eq(parameters.patternSettings.isExternalPattern,'false') }}:
 
               # Checkout the pattern from release-engine-core repository
               - checkout: self
@@ -145,7 +145,7 @@ jobs:
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'true') }}:
 
           # Pattern is ## external ## from release-engine-core, so the configuration test is in the pattern repository 
-          - ${{ if eq(parameters.patternSettings.externalPattern,'true') }}:
+          - ${{ if eq(parameters.patternSettings.isExternalPattern,'true') }}:
               
               # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
               - checkout: self
@@ -166,7 +166,7 @@ jobs:
                   !pipelines/**
 
           # Pattern is ## not external ##, it is built-in in the release-engine-core, so the release-engine-core is in also in the configuration test repository 
-          - ${{ if eq(parameters.patternSettings.externalPattern,'false') }}:
+          - ${{ if eq(parameters.patternSettings.isExternalPattern,'false') }}:
               
               # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
               - checkout: self
