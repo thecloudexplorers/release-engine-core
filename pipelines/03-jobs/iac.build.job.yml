@@ -46,7 +46,7 @@ jobs:
           # The pattern is an internal pattern on release-engine-core repository
           - ${{ if eq(parameters.patternSettings.patternContext,'internal')}}:
               - name: patternCheckoutDirectory
-                value: releaseEngineCheckoutDirectory1
+                value: patternCheckoutDirectory1
 
           # The pattern is on its own repository, default if the option is omitted
           - ${{ if ne(parameters.patternSettings.patternContext,'internal')}}:
@@ -92,9 +92,9 @@ jobs:
           - checkout: release-engine-core
             path: releaseEngineCheckoutDirectory
 
-      - ${{ if ne(parameters.patternSettings.patternContext,'internal') }}:
-          - checkout: workload
-            path: patternCheckoutDirectory
+      # - ${{ if ne(parameters.patternSettings.patternContext,'internal') }}:
+      #     - checkout: workload
+      #       path: patternCheckoutDirectory
 
 
       # The configuration pipeline is inside the pattern repository or release-engine-core repository
