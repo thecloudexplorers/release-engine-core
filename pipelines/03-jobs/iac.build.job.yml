@@ -22,7 +22,16 @@ jobs:
         # sparseCheckoutPatterns: |
         #   *.bicepparam
         #   *.json
-        #   **/scripts/**
+          # **/scripts/**
+
+      - checkout: self
+        path: checkoutDirectory/iac
+        # sparseCheckoutPatterns: |
+        #   *.bicep
+        #   # !tests/**
+        #   # !examples/**
+        #   # !deployment-pattern.yml
+
  
       # # It is a production pipeline (not a test pipeline)
       # - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'false') }}:
