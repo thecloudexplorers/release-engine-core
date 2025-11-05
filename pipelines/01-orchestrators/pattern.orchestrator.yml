@@ -1,4 +1,6 @@
 parameters:
+  - name: deploymentSettings
+    type: object
   - name: patternSettings
     type: object
 
@@ -6,6 +8,7 @@ stages:
   - template: /pipelines/02-stages/iac.build.stage.yml
     parameters:
       patternSettings: ${{ parameters.patternSettings }}
+      deploymentSettings: ${{ parameters.deploymentSettings }}
 
   - template: /pipelines/02-stages/iac.deploy.stage.yml
     parameters:
