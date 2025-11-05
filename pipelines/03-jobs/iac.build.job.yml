@@ -123,8 +123,7 @@ jobs:
           - ${{ if ne(parameters.patternSettings.patternContext,'internal')}}:
               - checkout: release-engine-core
                 path: releaseEngineCheckoutDirectory
-              - checkout: workload
-                path: patternCheckoutDirectory
+              # - checkout: workloads
 
 
       - powershell: |
