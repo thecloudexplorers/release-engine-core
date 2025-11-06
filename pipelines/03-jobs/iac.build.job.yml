@@ -163,7 +163,7 @@ jobs:
         inputs:
           SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common
           Contents: |
-            **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
+            **
           TargetFolder: $(build.artifactstagingdirectory)/common
           flattenFolders: false
 
