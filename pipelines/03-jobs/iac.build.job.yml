@@ -153,7 +153,7 @@ jobs:
         inputs:
           SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/configuration
           Contents: |
-            **
+            **/iac/**
             !tests/**
             !examples/**
             !deployment-pattern.yml
