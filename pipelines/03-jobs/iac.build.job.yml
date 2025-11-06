@@ -29,7 +29,7 @@ jobs:
         # path: configurationCheckoutDirectory
         path: checkoutDirectory/configuration
         sparseCheckoutPatterns: |
-          **/${{ parameters.deploymentSettings.configurationFilePath }}/
+          **/_config/
         # *.bicepparam
         # *.json
         # **/scripts/**
