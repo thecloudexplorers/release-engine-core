@@ -19,7 +19,7 @@ jobs:
       # its default alias is self
       # - checkout: self
       #   # path: configurationCheckoutDirectory
-      #   path: checkoutDirectory/configuration
+      #   path: patternCheckoutDirectory
       #   sparseCheckoutPatterns: |
       #     *.bicepparam
       #     *.json
@@ -27,7 +27,7 @@ jobs:
 
 
       - checkout: self
-        path: checkoutDirectory/configuration
+        path: patternCheckoutDirectory
         sparseCheckoutPatterns: |
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
@@ -128,7 +128,7 @@ jobs:
 
 
       - checkout: self
-        path: checkoutDirectory/configuration
+        path: patternCheckoutDirectory
         sparseCheckoutPatterns: |
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
@@ -138,7 +138,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copying content from Configuration repository
         inputs:
-          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/configuration/${{ parameters.patternSettings.configurationFilePath }}
+          SourceFolder: $(Pipeline.Workspace)/patternCheckoutDirectory/${{ parameters.patternSettings.configurationFilePath }}
           Contents: |
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
@@ -148,7 +148,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copying Deployment Pattern content
         inputs:
-          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/configuration
+          SourceFolder: $(Pipeline.Workspace)/patternCheckoutDirectory
           Contents: |
             **/iac/**
             !tests/**
@@ -170,7 +170,7 @@ jobs:
       # - task: CopyFiles@2
       #   displayName: Copying scripts content (flattened)
       #   inputs:
-      #     SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/configuration/${{ parameters.deploymentSettings.configurationFilePath }}
+      #     SourceFolder: $(Pipeline.Workspace)/patternCheckoutDirectory/${{ parameters.deploymentSettings.configurationFilePath }}
       #     Contents: |
       #       **/scripts/**/*.ps1
       #       **/scripts/**/*.sh
