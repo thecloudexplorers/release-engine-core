@@ -131,11 +131,11 @@ jobs:
         displayName: Debug - Display Settings and Environment Variables
         condition: eq( variables['System.Debug'], 'true' )
 
-      - task: PublishPipelineArtifact@1
-        inputs:
-          targetPath: $(Pipeline.Workspace)/checkoutDirectory/common
-          artifact: common
-          publishLocation: pipeline
+      # - task: PublishPipelineArtifact@1
+      #   inputs:
+      #     targetPath: $(Pipeline.Workspace)/checkoutDirectory/common
+      #     artifact: common
+      #     publishLocation: pipeline
 
       - task: PublishPipelineArtifact@1
         inputs:
