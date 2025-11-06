@@ -27,54 +27,51 @@ jobs:
 
 
       - checkout: self
-        # path: configurationCheckoutDirectory
         path: checkoutDirectory/configuration
         sparseCheckoutPatterns: |
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
-        # *.bicepparam
-        # *.json
-        # **/scripts/**
+          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
+          **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
+          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicep
 
 
 
  
-      # # It is a production pipeline (not a test pipeline)
-      # - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'false') }}:
+      # It is a production pipeline (not a test pipeline)
+      - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'false') }}:
 
-      #     # If it is a production pipeline, the release engine will always be in a different repo than the configuration
-      #     - checkout: release-engine-core
-      #       path: checkoutDirectory/common
-      #       sparseCheckoutPatterns: |
-      #         **
-      #         !tests/**
-      #         !examples/**
-      #         !pipelines/**
+          # If it is a production pipeline, the release engine will always be in a different repo than the configuration
+          - checkout: release-engine-core
+            path: checkoutDirectory/common
+            sparseCheckoutPatterns: |
+              **
+              !tests/**
+              !examples/**
+              !pipelines/**
 
-      #   # Pattern is external from release-engine-core
-      #     - ${{ if eq(parameters.patternSettings.isExternalPattern,'true') }}:
+        # Pattern is external from release-engine-core
+          - ${{ if eq(parameters.patternSettings.isExternalPattern,'true') }}:
               
-      #         # Checkout the pattern from independent repository
-      #         - checkout: pattern
-      #           path: checkoutDirectory/iac
-      #           sparseCheckoutPatterns: |
-      #             *.bicep
-      #             # !tests/**
-      #             # !examples/**
-      #             # !deployment-pattern.yml
+              # Checkout the pattern from independent repository
+              - checkout: pattern
+                path: checkoutDirectory/iac
+                sparseCheckoutPatterns: |
+                  *.bicep
+                  # !tests/**
+                  # !examples/**
+                  # !deployment-pattern.yml
 
-      #   # Pattern is internal from release-engine-core
+          # Pattern is internal from release-engine-core
+          - ${{ if eq(parameters.patternSettings.isExternalPattern,'false') }}:
 
-      #     # Pattern is external from release-engine-core
-      #     - ${{ if eq(parameters.patternSettings.isExternalPattern,'false') }}:
-
-      #         # Checkout the pattern from release-engine-core repository
-      #         - checkout: self
-      #           path: checkoutDirectory/iac
-      #           sparseCheckoutPatterns: |
-      #             *.bicep
-      #             # !tests/**
-      #             # !examples/**
-      #             # !deployment-pattern.yml
+              # Checkout the pattern from release-engine-core repository
+              - checkout: self
+                path: checkoutDirectory/iac
+                sparseCheckoutPatterns: |
+                  *.bicep
+                  # !tests/**
+                  # !examples/**
+                  # !deployment-pattern.yml
 
       # # It is a test pipeline (not production)
       # - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'true') }}:
