@@ -185,7 +185,7 @@ jobs:
           Contents: |
             **/*.ps1
             **/*.sh
-          TargetFolder: $(build.artifactstagingdirectory)/common
+          TargetFolder: $(build.artifactstagingdirectory)/common/scripts
           flattenFolders: false
 
 
