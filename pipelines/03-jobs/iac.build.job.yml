@@ -10,7 +10,7 @@ jobs:
     variables:
       - template: ${{ parameters.deploymentSettings.configurationFilePath }}/metadata.yml@self
       - name: checkoutPattern
-        value: _config
+        value: ${{ parameters.deploymentSettings.configurationFilePath }}
     steps:
 
       # Checkout configuration files
