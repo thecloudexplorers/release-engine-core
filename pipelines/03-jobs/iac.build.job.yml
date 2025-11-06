@@ -126,13 +126,23 @@ jobs:
         displayName: Debug - Display Settings and Environment Variables
         condition: eq( variables['System.Debug'], 'true' )
 
+
+      - checkout: self
+        path: checkoutDirectory/configuration
+        sparseCheckoutPatterns: |
+          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
+          **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
+          **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+
+
       - task: CopyFiles@2
         displayName: Copying content from Configuration repository
         inputs:
           SourceFolder: $(Pipeline.Workspace)/configurationCheckoutDirectory/${{ parameters.patternSettings.configurationFilePath }}
           Contents: |
-            **
-            !pipelines/**
+            **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+            **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
           flattenFolders: false
 
@@ -153,10 +163,7 @@ jobs:
         inputs:
           SourceFolder: $(Pipeline.Workspace)/$(releaseEngineCheckoutDirectory)/common
           Contents: |
-            **
-            !tests/**
-            !examples/**
-            !pipelines/**
+            **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
           TargetFolder: $(build.artifactstagingdirectory)/common
           flattenFolders: false
 
@@ -173,14 +180,14 @@ jobs:
       #     artifact: $(deploymentPattern)
       #     publishLocation: pipeline
 
-      - task: PublishPipelineArtifact@1
-        inputs:
-          targetPath: $(build.artifactstagingdirectory)/$(deploymentPattern)
-          artifact: $(deploymentPattern)
-          publishLocation: pipeline
+      # - task: PublishPipelineArtifact@1
+      #   inputs:
+      #     targetPath: $(build.artifactstagingdirectory)/$(deploymentPattern)
+      #     artifact: $(deploymentPattern)
+      #     publishLocation: pipeline
 
-      - task: PublishPipelineArtifact@1
-        inputs:
-          targetPath: $(build.artifactstagingdirectory)/common
-          artifact: common
-          publishLocation: pipeline          
+      # - task: PublishPipelineArtifact@1
+      #   inputs:
+      #     targetPath: $(build.artifactstagingdirectory)/common
+      #     artifact: common
+      #     publishLocation: pipeline          
