@@ -34,9 +34,6 @@ jobs:
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicep
 
-
-
- 
       # It is a production pipeline (not a test pipeline)
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'false') }}:
 
