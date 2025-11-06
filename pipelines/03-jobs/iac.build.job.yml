@@ -15,6 +15,7 @@ jobs:
 
       # Checkout configuration files
 
+      # ORIGINAL LOGIC (REFERENCE ONLY - DO NOT UNCOMMENT)
       # The configuration repository always initiate the pipeline, 
       # its default alias is self
       # - checkout: self
@@ -25,95 +26,58 @@ jobs:
       #     *.json
       #     **/scripts/**
 
+      # ORIGINAL CHECKOUT LOGIC FOR EXTERNAL PATTERNS (REFERENCE ONLY)
+      # - checkout: release-engine-core
+      #   path: scriptsCheckoutDirectory
+      #   sparseCheckoutPatterns: |
+      #     **/common/scripts/**
+      
+      # - ${{ if eq(parameters.patternSettings.patternContext,'external') }}:
+      #   - checkout: pattern
+      #     path: patternCheckoutDirectory
+      #     sparseCheckoutPatterns: |
+      #       **/*.bicep
+      #       !tests/**
+      #       !examples/**
+      #       !deployment-pattern.yml
 
-      - checkout: self
-        path: patternCheckoutDirectory
-        sparseCheckoutPatterns: |
-          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
-          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
-          **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
-          **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
-
-      # It is a production pipeline (not a test pipeline)
-      - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'false') }}:
-
-          # If it is a production pipeline, the release engine will always be in a different repo than the configuration
-          - checkout: release-engine-core
-            path: scriptsCheckoutDirectory
+      # NEW CONDITIONAL LOGIC - For test pipelines inside release-engine-core repo (internal context)
+      - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - checkout: self
+            path: checkoutDirectory
             sparseCheckoutPatterns: |
-              **
-              !tests/**
-              !examples/**
-              !pipelines/**
+              **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+              **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
+              **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
+              **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+              **/common/scripts/**
 
-        # Pattern is external from release-engine-core
-          - ${{ if eq(parameters.patternSettings.isExternalPattern,'true') }}:
-              
-              # Checkout the pattern from independent repository
+      # For production pipelines or external patterns
+      - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          
+          # Checkout configuration files from self (configuration repo)
+          - checkout: self
+            path: checkoutDirectory/configuration
+            sparseCheckoutPatterns: |
+              **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+              **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
+              **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
+
+          # Checkout release-engine-core for common scripts
+          - checkout: release-engine-core
+            path: checkoutDirectory/common
+            sparseCheckoutPatterns: |
+              **/common/scripts/**
+
+          # Pattern is external from release-engine-core
+          - ${{ if eq(parameters.patternSettings.patternContext,'external') }}:
               - checkout: pattern
-                path: checkoutDirectory/iac
+                path: checkoutDirectory/pattern
                 sparseCheckoutPatterns: |
-                  *.bicep
-                  # !tests/**
-                  # !examples/**
-                  # !deployment-pattern.yml
-
-          # # Pattern is internal from release-engine-core
-          # - ${{ if eq(parameters.patternSettings.isExternalPattern,'false') }}:
-
-          #     # Checkout the pattern from release-engine-core repository
-          #     - checkout: self
-          #       path: checkoutDirectory/iac
-          #       sparseCheckoutPatterns: |
-          #         *.bicep
-          #         # !tests/**
-          #         # !examples/**
-          #         # !deployment-pattern.yml
-
-      # It is a test pipeline (not production)
-      - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'true') }}:
-
-          # Pattern is ## external ## from release-engine-core, so the configuration test is in the pattern repository 
-          - ${{ if eq(parameters.patternSettings.isExternalPattern,'true') }}:
-              
-              # # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
-              # - checkout: self
-              #   path: checkoutDirectory/iac
-              #   sparseCheckoutPatterns: |
-              #     *.bicep
-              #     # !tests/**
-              #     # !examples/**
-              #     # !deployment-pattern.yml
-
-              # If the pattern is external, the release engine is in a different repo than the configuration
-              - checkout: release-engine-core
-                path: scriptsCheckoutDirectory
-                sparseCheckoutPatterns: |
-                  **
+                  **/*.bicep
                   !tests/**
                   !examples/**
-                  !pipelines/**
-
-          # Pattern is ## not external ##, it is built-in in the release-engine-core, so the release-engine-core is in also in the configuration test repository 
-          - ${{ if eq(parameters.patternSettings.isExternalPattern,'false') }}:
-              
-              # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
-              - checkout: self
-                path: checkoutDirectory/iac
-                sparseCheckoutPatterns: |
-                  *.bicep
-                  # !tests/**
-                  # !examples/**
-                  # !deployment-pattern.yml
-
-              # If the pattern is external, the release engine is in a different repo than the configuration
-              - checkout: self
-                path: scriptsCheckoutDirectory
-                sparseCheckoutPatterns: |
-                  **
-                  !tests/**
-                  !examples/**
-                  !pipelines/**                  
+                  !deployment-pattern.yml
 
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
@@ -126,46 +90,101 @@ jobs:
         displayName: Debug - Display Settings and Environment Variables
         condition: eq( variables['System.Debug'], 'true' )
 
+      # Copy configuration files - handle internal vs external context
+      - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: Copying content from Configuration repository (internal)
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/${{ parameters.deploymentSettings.configurationFilePath }}
+              Contents: |
+                **/*.json
+                **/*.bicepparam
+              TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
+              flattenFolders: false
 
-      - checkout: self
-        path: patternCheckoutDirectory
-        sparseCheckoutPatterns: |
-          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
-          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
-          **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
-          **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+      - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: Copying content from Configuration repository (external)
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/configuration/${{ parameters.deploymentSettings.configurationFilePath }}
+              Contents: |
+                **/*.json
+                **/*.bicepparam
+              TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
+              flattenFolders: false
 
-      - task: CopyFiles@2
-        displayName: Copying content from Configuration repository
-        inputs:
-          SourceFolder: $(Pipeline.Workspace)/patternCheckoutDirectory/${{ parameters.patternSettings.configurationFilePath }}
-          Contents: |
-            **/*.json
-            **/*.bicepparam
-          TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
-          flattenFolders: true
+      # ORIGINAL COPY TASKS LOGIC (REFERENCE ONLY - DO NOT UNCOMMENT)
+      # - task: CopyFiles@2
+      #   displayName: Copying content from Configuration repository
+      #   inputs:
+      #     SourceFolder: $(Pipeline.Workspace)/patternCheckoutDirectory/${{ parameters.deploymentSettings.configurationFilePath }}
+      #     Contents: |
+      #       **/*.json
+      #       **/*.bicepparam
+      #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
+      #     flattenFolders: false
 
-      - task: CopyFiles@2
-        displayName: Copying Deployment Pattern content
-        inputs:
-          SourceFolder: $(Pipeline.Workspace)/patternCheckoutDirectory
-          Contents: |
-            **/iac/**
-            !tests/**
-            !examples/**
-            !deployment-pattern.yml
-          TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
-          flattenFolders: true
+      # - task: CopyFiles@2
+      #   displayName: Copying Deployment Pattern content
+      #   inputs:
+      #     SourceFolder: $(Pipeline.Workspace)/patternCheckoutDirectory
+      #     Contents: |
+      #       **/*.bicep
+      #       !tests/**
+      #       !examples/**
+      #       !deployment-pattern.yml
+      #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
+      #     flattenFolders: false
 
-      - task: CopyFiles@2
-        displayName: Copying common scripts content
-        inputs:
-          SourceFolder: $(Pipeline.Workspace)/scriptsCheckoutDirectory/common/scripts/
-          Contents: |
-            **/*.ps1
-            **/*.sh
-          TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-          flattenFolders: false
+      # Copy pattern bicep files - handle internal vs external patterns
+      - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: Copying Deployment Pattern content (internal)
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/${{ parameters.patternSettings.patternArtifactsPath }}
+              Contents: |
+                **/*.bicep
+                !tests/**
+                !examples/**
+                !deployment-pattern.yml
+              TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
+              flattenFolders: false
+
+      - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'external')) }}:
+          - task: CopyFiles@2
+            displayName: Copying Deployment Pattern content (external pattern)
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/pattern
+              Contents: |
+                **/*.bicep
+                !tests/**
+                !examples/**
+                !deployment-pattern.yml
+              TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
+              flattenFolders: false
+
+      # Copy common scripts - handle internal vs external context
+      - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: Copying common scripts content (internal)
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/scripts/
+              Contents: |
+                **/*.ps1
+                **/*.sh
+              TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+              flattenFolders: false
+
+      - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: Copying common scripts content (external)
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/common/scripts/
+              Contents: |
+                **/*.ps1
+                **/*.sh
+              TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+              flattenFolders: false
       
       # - task: CopyFiles@2
       #   displayName: Copying scripts content (flattened)
