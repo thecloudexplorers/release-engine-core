@@ -39,7 +39,7 @@ jobs:
 
           # If it is a production pipeline, the release engine will always be in a different repo than the configuration
           - checkout: release-engine-core
-            path: checkoutDirectory/common
+            path: scriptsCheckoutDirectory
             sparseCheckoutPatterns: |
               **
               !tests/**
@@ -87,7 +87,7 @@ jobs:
 
               # If the pattern is external, the release engine is in a different repo than the configuration
               - checkout: release-engine-core
-                path: checkoutDirectory/common
+                path: scriptsCheckoutDirectory
                 sparseCheckoutPatterns: |
                   **
                   !tests/**
@@ -108,7 +108,7 @@ jobs:
 
               # # If the pattern is external, the release engine is in a different repo than the configuration
               # - checkout: self
-              #   path: checkoutDirectory/common
+              #   path: scriptsCheckoutDirectory
               #   sparseCheckoutPatterns: |
               #     **
               #     !tests/**
@@ -160,7 +160,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copying common scripts content
         inputs:
-          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/common/scripts/
+          SourceFolder: $(Pipeline.Workspace)/scriptsCheckoutDirectory/common/scripts/
           Contents: |
             **/*.ps1
             **/*.sh
@@ -179,7 +179,7 @@ jobs:
 
       # - task: PublishPipelineArtifact@1
       #   inputs:
-      #     targetPath: $(Pipeline.Workspace)/checkoutDirectory/common
+      #     targetPath: $(Pipeline.Workspace)/scriptsCheckoutDirectory
       #     artifact: common
       #     publishLocation: pipeline
 
