@@ -9,39 +9,9 @@ jobs:
     displayName: Building IaC Artifacts
     variables:
       - template: ${{ parameters.deploymentSettings.configurationFilePath }}/metadata.yml@self
-      # - name: checkoutPattern
-      #   value: ${{ parameters.deploymentSettings.configurationFilePath }}
     steps:
 
-      # Checkout configuration files
-
-      # ORIGINAL LOGIC (REFERENCE ONLY - DO NOT UNCOMMENT)
-      # The configuration repository always initiate the pipeline, 
-      # its default alias is self
-      # - checkout: self
-      #   # path: configurationCheckoutDirectory
-      #   path: patternCheckoutDirectory
-      #   sparseCheckoutPatterns: |
-      #     *.bicepparam
-      #     *.json
-      #     **/scripts/**
-
-      # ORIGINAL CHECKOUT LOGIC FOR EXTERNAL PATTERNS (REFERENCE ONLY)
-      # - checkout: release-engine-core
-      #   path: scriptsCheckoutDirectory
-      #   sparseCheckoutPatterns: |
-      #     **/common/scripts/**
-      
-      # - ${{ if eq(parameters.patternSettings.patternContext,'external') }}:
-      #   - checkout: pattern
-      #     path: patternCheckoutDirectory
-      #     sparseCheckoutPatterns: |
-      #       **/*.bicep
-      #       !tests/**
-      #       !examples/**
-      #       !deployment-pattern.yml
-
-      # NEW CONDITIONAL LOGIC - For test pipelines inside release-engine-core repo (internal context)
+      # For test pipelines inside release-engine-core repo (single repository)
       - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
           - checkout: self
             path: checkoutDirectory
@@ -55,7 +25,7 @@ jobs:
       # For production pipelines or external patterns
       - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
           
-          # Checkout configuration files from self (configuration repo)
+          # Checkout configuration files from self (configuration repository)
           - checkout: self
             path: checkoutDirectory/configuration
             sparseCheckoutPatterns: |
@@ -150,6 +120,21 @@ jobs:
               TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
               flattenFolders: false
 
+      # When configurationPipelineContext is external but patternContext is internal (pattern from release-engine-core)
+      - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'internal')) }}:
+          - task: CopyFiles@2
+            displayName: Copying Deployment Pattern content (external config, internal pattern)
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/${{ parameters.patternSettings.patternArtifactsPath }}
+              Contents: |
+                **/*.bicep
+                !tests/**
+                !examples/**
+                !deployment-pattern.yml
+              TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
+              flattenFolders: false
+
+      # When both configurationPipelineContext and patternContext are external
       - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'external')) }}:
           - task: CopyFiles@2
             displayName: Copying Deployment Pattern content (external pattern)
