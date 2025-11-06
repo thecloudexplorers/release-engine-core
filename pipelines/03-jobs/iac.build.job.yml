@@ -95,7 +95,7 @@ jobs:
                   !pipelines/**
 
           # Pattern is ## not external ##, it is built-in in the release-engine-core, so the release-engine-core is in also in the configuration test repository 
-          - ${{ if eq(parameters.patternSettings.isExternalPattern,'false') }}:
+          # - ${{ if eq(parameters.patternSettings.isExternalPattern,'false') }}:
               
               # # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
               # - checkout: self
