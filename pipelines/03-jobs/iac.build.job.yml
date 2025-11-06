@@ -185,8 +185,8 @@ jobs:
           Contents: |
             **/scripts/**/*.ps1
             **/scripts/**/*.sh
-          TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-          flattenFolders: false
+          TargetFolder: $(build.artifactstagingdirectory)/common
+          flattenFolders: true
 
 
       # - task: PublishPipelineArtifact@1
