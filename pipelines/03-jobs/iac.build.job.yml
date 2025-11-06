@@ -33,11 +33,20 @@ jobs:
               **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
               **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
 
-          # Checkout release-engine-core for common scripts
-          - checkout: release-engine-core
-            path: checkoutDirectory/common
-            sparseCheckoutPatterns: |
-              **/common/scripts/**
+          # Checkout release-engine-core for common scripts and internal patterns
+          - ${{ if eq(parameters.patternSettings.patternContext, 'internal') }}:
+              - checkout: release-engine-core
+                path: checkoutDirectory/release-engine-core
+                sparseCheckoutPatterns: |
+                  **/common/scripts/**
+                  **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+
+          # Checkout release-engine-core for common scripts only (when pattern is external)
+          - ${{ if eq(parameters.patternSettings.patternContext, 'external') }}:
+              - checkout: release-engine-core
+                path: checkoutDirectory/release-engine-core
+                sparseCheckoutPatterns: |
+                  **/common/scripts/**
 
           # Pattern is external from release-engine-core
           - ${{ if eq(parameters.patternSettings.patternContext,'external') }}:
@@ -125,7 +134,7 @@ jobs:
           - task: CopyFiles@2
             displayName: Copying Deployment Pattern content (external config, internal pattern)
             inputs:
-              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/${{ parameters.patternSettings.patternArtifactsPath }}
+              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/release-engine-core/${{ parameters.patternSettings.patternArtifactsPath }}
               Contents: |
                 **/*.bicep
                 !tests/**
@@ -164,7 +173,7 @@ jobs:
           - task: CopyFiles@2
             displayName: Copying common scripts content (external)
             inputs:
-              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/common/scripts/
+              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/release-engine-core/common/scripts/
               Contents: |
                 **/*.ps1
                 **/*.sh
