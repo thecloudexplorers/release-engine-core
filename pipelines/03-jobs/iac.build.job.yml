@@ -180,14 +180,14 @@ jobs:
       #     artifact: $(deploymentPattern)
       #     publishLocation: pipeline
 
-      # - task: PublishPipelineArtifact@1
-      #   inputs:
-      #     targetPath: $(build.artifactstagingdirectory)/$(deploymentPattern)
-      #     artifact: $(deploymentPattern)
-      #     publishLocation: pipeline
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: $(build.artifactstagingdirectory)/$(deploymentPattern)
+          artifact: $(deploymentPattern)
+          publishLocation: pipeline
 
-      # - task: PublishPipelineArtifact@1
-      #   inputs:
-      #     targetPath: $(build.artifactstagingdirectory)/common
-      #     artifact: common
-      #     publishLocation: pipeline          
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: $(build.artifactstagingdirectory)/common
+          artifact: common
+          publishLocation: pipeline          
