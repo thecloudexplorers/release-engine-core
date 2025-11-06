@@ -149,7 +149,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copying Deployment Pattern content
         inputs:
-          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/iac/${{ parameters.patternSettings.patternArtifactsPath }}
+          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/iac/
           Contents: |
             **
             !tests/**
