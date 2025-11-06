@@ -163,7 +163,7 @@ jobs:
         inputs:
           SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/
           Contents: |
-            **/common/
+            **
           TargetFolder: $(build.artifactstagingdirectory)/common
           flattenFolders: false
 
