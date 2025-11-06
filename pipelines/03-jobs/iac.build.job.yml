@@ -135,7 +135,6 @@ jobs:
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
           **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
-
       - task: CopyFiles@2
         displayName: Copying content from Configuration repository
         inputs:
@@ -144,9 +143,7 @@ jobs:
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
-          flattenFolders: false
-
-
+          flattenFolders: true
 
       - task: CopyFiles@2
         displayName: Copying Deployment Pattern content
@@ -170,15 +167,15 @@ jobs:
           TargetFolder: $(build.artifactstagingdirectory)/common/scripts
           flattenFolders: false
       
-      - task: CopyFiles@2
-        displayName: Copying scripts content (flattened)
-        inputs:
-          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/configuration/${{ parameters.deploymentSettings.configurationFilePath }}
-          Contents: |
-            **/scripts/**/*.ps1
-            **/scripts/**/*.sh
-          TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/scripts
-          flattenFolders: true
+      # - task: CopyFiles@2
+      #   displayName: Copying scripts content (flattened)
+      #   inputs:
+      #     SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/configuration/${{ parameters.deploymentSettings.configurationFilePath }}
+      #     Contents: |
+      #       **/scripts/**/*.ps1
+      #       **/scripts/**/*.sh
+      #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/scripts
+      #     flattenFolders: true
 
       # - task: PublishPipelineArtifact@1
       #   inputs:
@@ -202,4 +199,4 @@ jobs:
         inputs:
           targetPath: $(build.artifactstagingdirectory)/common
           artifact: common
-          publishLocation: pipeline          
+          publishLocation: pipeline
