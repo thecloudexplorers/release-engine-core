@@ -95,25 +95,25 @@ jobs:
                   !pipelines/**
 
           # Pattern is ## not external ##, it is built-in in the release-engine-core, so the release-engine-core is in also in the configuration test repository 
-          # - ${{ if eq(parameters.patternSettings.isExternalPattern,'false') }}:
+          - ${{ if eq(parameters.patternSettings.isExternalPattern,'false') }}:
               
-              # # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
-              # - checkout: self
-              #   path: checkoutDirectory/iac
-              #   sparseCheckoutPatterns: |
-              #     *.bicep
-              #     # !tests/**
-              #     # !examples/**
-              #     # !deployment-pattern.yml
+              # Checkout the pattern from configuration repository #TODO: Check if can be moved outside the if
+              - checkout: self
+                path: checkoutDirectory/iac
+                sparseCheckoutPatterns: |
+                  *.bicep
+                  # !tests/**
+                  # !examples/**
+                  # !deployment-pattern.yml
 
-              # # If the pattern is external, the release engine is in a different repo than the configuration
-              # - checkout: self
-              #   path: scriptsCheckoutDirectory
-              #   sparseCheckoutPatterns: |
-              #     **
-              #     !tests/**
-              #     !examples/**
-              #     !pipelines/**                  
+              # If the pattern is external, the release engine is in a different repo than the configuration
+              - checkout: self
+                path: scriptsCheckoutDirectory
+                sparseCheckoutPatterns: |
+                  **
+                  !tests/**
+                  !examples/**
+                  !pipelines/**                  
 
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
