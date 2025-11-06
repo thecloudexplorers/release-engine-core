@@ -100,40 +100,95 @@ jobs:
       # COPY PHASE - Unified copy tasks using standardized paths
       # =============================================================================
       
-      # Copy configuration files
-      - task: CopyFiles@2
-        displayName: 'Copy: Configuration files'
-        inputs:
-          SourceFolder: ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}$(Pipeline.Workspace)/s${{ parameters.deploymentSettings.configurationFilePath }}${{ else }}$(configurationPath)${{ parameters.deploymentSettings.configurationFilePath }}
-          Contents: |
-            **/*.json
-            **/*.bicepparam
-          TargetFolder: $(Build.ArtifactStagingDirectory)/$(deploymentPattern)/configuration
-          flattenFolders: false
+      # Copy configuration files - Internal context
+      - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: 'Copy: Configuration files'
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/s${{ parameters.deploymentSettings.configurationFilePath }}
+              Contents: |
+                **/*.json
+                **/*.bicepparam
+              TargetFolder: $(Build.ArtifactStagingDirectory)/$(deploymentPattern)/configuration
+              flattenFolders: false
 
-      # Copy pattern bicep files
-      - task: CopyFiles@2
-        displayName: 'Copy: Pattern bicep files'
-        inputs:
-          SourceFolder: ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}$(Pipeline.Workspace)/s${{ parameters.patternSettings.patternArtifactsPath }}${{ elseif eq(parameters.patternSettings.patternContext, 'external') }}$(patternPath)${{ else }}$(commonPath)${{ parameters.patternSettings.patternArtifactsPath }}
-          Contents: |
-            **/*.bicep
-            !tests/**
-            !examples/**
-            !deployment-pattern.yml
-          TargetFolder: $(Build.ArtifactStagingDirectory)/$(deploymentPattern)/iac
-          flattenFolders: false
+      # Copy configuration files - External context
+      - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: 'Copy: Configuration files'
+            inputs:
+              SourceFolder: $(configurationPath)${{ parameters.deploymentSettings.configurationFilePath }}
+              Contents: |
+                **/*.json
+                **/*.bicepparam
+              TargetFolder: $(Build.ArtifactStagingDirectory)/$(deploymentPattern)/configuration
+              flattenFolders: false
 
-      # Copy common scripts
-      - task: CopyFiles@2
-        displayName: 'Copy: Common scripts'
-        inputs:
-          SourceFolder: ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}$(Pipeline.Workspace)/s/common/scripts${{ else }}$(commonPath)/common/scripts
-          Contents: |
-            **/*.ps1
-            **/*.sh
-          TargetFolder: $(Build.ArtifactStagingDirectory)/common/scripts
-          flattenFolders: false
+      # Copy pattern bicep files - Internal context
+      - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: 'Copy: Pattern bicep files'
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/s${{ parameters.patternSettings.patternArtifactsPath }}
+              Contents: |
+                **/*.bicep
+                !tests/**
+                !examples/**
+                !deployment-pattern.yml
+              TargetFolder: $(Build.ArtifactStagingDirectory)/$(deploymentPattern)/iac
+              flattenFolders: false
+
+      # Copy pattern bicep files - External pattern
+      - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'external')) }}:
+          - task: CopyFiles@2
+            displayName: 'Copy: Pattern bicep files'
+            inputs:
+              SourceFolder: $(patternPath)
+              Contents: |
+                **/*.bicep
+                !tests/**
+                !examples/**
+                !deployment-pattern.yml
+              TargetFolder: $(Build.ArtifactStagingDirectory)/$(deploymentPattern)/iac
+              flattenFolders: false
+
+      # Copy pattern bicep files - Internal pattern from core
+      - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'internal')) }}:
+          - task: CopyFiles@2
+            displayName: 'Copy: Pattern bicep files'
+            inputs:
+              SourceFolder: $(commonPath)${{ parameters.patternSettings.patternArtifactsPath }}
+              Contents: |
+                **/*.bicep
+                !tests/**
+                !examples/**
+                !deployment-pattern.yml
+              TargetFolder: $(Build.ArtifactStagingDirectory)/$(deploymentPattern)/iac
+              flattenFolders: false
+
+      # Copy common scripts - Internal context
+      - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: 'Copy: Common scripts'
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/s/common/scripts
+              Contents: |
+                **/*.ps1
+                **/*.sh
+              TargetFolder: $(Build.ArtifactStagingDirectory)/common/scripts
+              flattenFolders: false
+
+      # Copy common scripts - External context
+      - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: 'Copy: Common scripts'
+            inputs:
+              SourceFolder: $(commonPath)/common/scripts
+              Contents: |
+                **/*.ps1
+                **/*.sh
+              TargetFolder: $(Build.ArtifactStagingDirectory)/common/scripts
+              flattenFolders: false
 
       # =============================================================================
       # PUBLISH PHASE
