@@ -32,7 +32,7 @@ jobs:
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
           **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
-          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicep
+          **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
       # It is a production pipeline (not a test pipeline)
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline,'false') }}:
