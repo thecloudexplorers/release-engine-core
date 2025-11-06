@@ -157,8 +157,8 @@ jobs:
             !tests/**
             !examples/**
             !deployment-pattern.yml
-          TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)
-          flattenFolders: false
+          TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
+          flattenFolders: true
 
       - task: CopyFiles@2
         displayName: Copying common scripts content
