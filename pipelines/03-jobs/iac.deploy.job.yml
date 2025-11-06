@@ -19,7 +19,7 @@ jobs:
       - name: patternArtifactsDirectory        
         value: $(Pipeline.Workspace)/$(deploymentPattern)/      
       - name: iacMainFilePath
-        value: $(patternArtifactsDirectory)/${{ parameters.jobSettings.stage.infrastructure.iac.iacMainFileName }}
+        value: $(patternArtifactsDirectory)/iac/${{ parameters.jobSettings.stage.infrastructure.iac.iacMainFileName }}
 
     strategy:
       runOnce:
