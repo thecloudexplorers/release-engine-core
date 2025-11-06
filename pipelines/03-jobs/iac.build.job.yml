@@ -161,9 +161,9 @@ jobs:
       - task: CopyFiles@2
         displayName: Copying common content
         inputs:
-          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory
+          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/
           Contents: |
-            **
+            **/common/
           TargetFolder: $(build.artifactstagingdirectory)/common
           flattenFolders: false
 
