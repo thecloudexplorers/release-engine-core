@@ -9,7 +9,8 @@ jobs:
     displayName: Building IaC Artifacts
     variables:
       - template: ${{ parameters.deploymentSettings.configurationFilePath }}/metadata.yml@self
-
+      - name: checkoutPattern
+        value: _config
     steps:
 
       # Checkout configuration files
@@ -29,7 +30,7 @@ jobs:
         # path: configurationCheckoutDirectory
         path: checkoutDirectory/configuration
         sparseCheckoutPatterns: |
-          **/_config/
+          **/$(checkoutPattern)/
         # *.bicepparam
         # *.json
         # **/scripts/**
