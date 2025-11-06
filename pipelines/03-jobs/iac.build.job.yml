@@ -179,14 +179,14 @@ jobs:
       #     flattenFolders: false
 
       - task: CopyFiles@2
-        displayName: Copying common scripts content (flattened)
+        displayName: Copying common scripts content
         inputs:
-          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/
+          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/common/scripts/
           Contents: |
-            **/scripts/**/*.ps1
-            **/scripts/**/*.sh
+            **/*.ps1
+            **/*.sh
           TargetFolder: $(build.artifactstagingdirectory)/common
-          flattenFolders: true
+          flattenFolders: false
 
 
       # - task: PublishPipelineArtifact@1
