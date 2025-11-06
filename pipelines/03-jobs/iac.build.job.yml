@@ -168,15 +168,15 @@ jobs:
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)
           flattenFolders: false
 
-      - task: CopyFiles@2
-        displayName: Copying common content (excluding scripts)
-        inputs:
-          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/
-          Contents: |
-            **
-            !**/scripts/**
-          TargetFolder: $(build.artifactstagingdirectory)/common
-          flattenFolders: false
+      # - task: CopyFiles@2
+      #   displayName: Copying common content (excluding scripts)
+      #   inputs:
+      #     SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/
+      #     Contents: |
+      #       **
+      #       !**/scripts/**
+      #     TargetFolder: $(build.artifactstagingdirectory)/common
+      #     flattenFolders: false
 
       - task: CopyFiles@2
         displayName: Copying common scripts content (flattened)
@@ -186,7 +186,7 @@ jobs:
             **/scripts/**/*.ps1
             **/scripts/**/*.sh
           TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-          flattenFolders: true
+          flattenFolders: false
 
 
       # - task: PublishPipelineArtifact@1
