@@ -38,7 +38,7 @@ jobs:
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
               - task: CopyFiles@2
-                displayName: Copying Deployment External Pattern content (test)
+                displayName: Copying IaC artifacts (test)
                 inputs:
                   SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
                   Contents: |
@@ -47,7 +47,7 @@ jobs:
                     !examples/**
                     !deployment-pattern.yml
                   TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
-                  flattenFolders: false
+                  flattenFolders: true
 
           # Scenario 3: Internal Pattern test - Validated!
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: 
@@ -65,7 +65,7 @@ jobs:
                   **/common/scripts/**
 
               - task: CopyFiles@2
-                displayName: Copying Deployment Pattern content (internal)
+                displayName: Copying IaC artifacts
                 inputs:
                   SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
                   Contents: |
@@ -74,7 +74,7 @@ jobs:
                     !examples/**
                     !deployment-pattern.yml
                   TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
-                  flattenFolders: false                                
+                  flattenFolders: true                                
 
       # Production / else
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}: # 4
@@ -157,14 +157,14 @@ jobs:
 
 
       - task: CopyFiles@2
-        displayName: Copying content from Configuration repository (internal)
+        displayName: Copying Configuration artifacts
         inputs:
           SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
           Contents: |
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
-          flattenFolders: false
+          flattenFolders: true
 
 
 
@@ -194,7 +194,7 @@ jobs:
       # Copy pattern bicep files - handle internal vs external patterns
       - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
           - task: CopyFiles@2
-            displayName: Copying Deployment Pattern content (internal)
+            displayName: Copying IaC artifacts (internal)
             inputs:
               SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
               Contents: |
@@ -203,7 +203,7 @@ jobs:
                 !examples/**
                 !deployment-pattern.yml
               TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
-              flattenFolders: false
+              flattenFolders: true
 
       # # When configurationPipelineContext is external but patternContext is internal (pattern from release-engine-core)
       # - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'internal')) }}:
