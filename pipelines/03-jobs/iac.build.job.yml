@@ -16,7 +16,9 @@ jobs:
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
 
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 2
-                              
+              - powershell: |
+                  Write-Host "Scenario 2: External Pattern test"                              
+
               - checkout: self # pattern repository
                 path: s/checkoutDirectory
                 sparseCheckoutPatterns: |
@@ -33,12 +35,21 @@ jobs:
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
-              - powershell: |
-                  Write-Host "Scenario 2: External Pattern test"
+              - task: CopyFiles@2
+                displayName: Copying Deployment External Pattern content (test)
+                inputs:
+                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
+                  Contents: |
+                    **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
+                    !tests/**
+                    !examples/**
+                    !deployment-pattern.yml
+                  TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
+                  flattenFolders: false
+
 
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 3
-
-                
+              
               
               - checkout: self # release-engine-core repository
                 path: s/checkoutDirectory
