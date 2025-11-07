@@ -16,7 +16,7 @@ jobs:
           
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 2
               - checkout: self # pattern repository
-                path: checkoutDirectory
+                path: s/checkoutDirectory
                 sparseCheckoutPatterns: |
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
@@ -26,14 +26,14 @@ jobs:
 
               # Checkout release-engine-core         
               - checkout: release-engine-core
-                path: checkoutDirectory/release-engine-core
+                path: s/checkoutDirectory/release-engine-core
                 sparseCheckoutPatterns: |
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 3
               - checkout: self # release-engine-core repository
-                path: checkoutDirectory
+                path: s/checkoutDirectory
                 sparseCheckoutPatterns: |
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
@@ -49,7 +49,7 @@ jobs:
               
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
-                path: checkoutDirectory/configuration
+                path: s/checkoutDirectory/configuration
                 sparseCheckoutPatterns: |
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
@@ -57,7 +57,7 @@ jobs:
 
               # Checkout pattern from dedicated pattern repository
               - checkout: pattern # pattern repository
-                path: checkoutDirectory/pattern
+                path: s/checkoutDirectory/pattern
                 sparseCheckoutPatterns: |
                   **/*.bicep
                   !tests/**
@@ -66,7 +66,7 @@ jobs:
 
               # Checkout release-engine-core         
               - checkout: release-engine-core # release-engine-core repository
-                path: checkoutDirectory/release-engine-core
+                path: s/checkoutDirectory/release-engine-core
                 sparseCheckoutPatterns: |
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
@@ -76,7 +76,7 @@ jobs:
 
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
-                path: checkoutDirectory/configuration
+                path: s/checkoutDirectory/configuration
                 sparseCheckoutPatterns: |
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
@@ -84,7 +84,7 @@ jobs:
 
               # Checkout release-engine-core         
               - checkout: release-engine-core # release-engine-core repository
-                path: checkoutDirectory/release-engine-core
+                path: s/checkoutDirectory/release-engine-core
                 sparseCheckoutPatterns: |
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
