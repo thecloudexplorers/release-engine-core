@@ -100,28 +100,18 @@ jobs:
         displayName: Debug - Display Settings and Environment Variables
         condition: eq( variables['System.Debug'], 'true' )
 
-      # Copy configuration files - handle internal vs external context
-      - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
-          - task: CopyFiles@2
-            displayName: Copying content from Configuration repository (internal)
-            inputs:
-              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/${{ parameters.deploymentSettings.configurationFilePath }}
-              Contents: |
-                **/*.json
-                **/*.bicepparam
-              TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
-              flattenFolders: false
 
-      - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
-          - task: CopyFiles@2
-            displayName: Copying content from Configuration repository (external)
-            inputs:
-              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/configuration/${{ parameters.deploymentSettings.configurationFilePath }}
-              Contents: |
-                **/*.json
-                **/*.bicepparam
-              TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
-              flattenFolders: false
+      - task: CopyFiles@2
+        displayName: Copying content from Configuration repository (internal)
+        inputs:
+          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory
+          Contents: |
+            **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+            **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
+          TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
+          flattenFolders: false
+
+
 
       # ORIGINAL COPY TASKS LOGIC (REFERENCE ONLY - DO NOT UNCOMMENT)
       # - task: CopyFiles@2
