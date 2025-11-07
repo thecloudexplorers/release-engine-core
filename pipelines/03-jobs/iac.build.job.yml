@@ -281,11 +281,11 @@ jobs:
       - task: PublishPipelineArtifact@1
         inputs:
           targetPath: $(build.artifactstagingdirectory)/$(deploymentPattern)
-          artifact: $(deploymentPattern)
+          artifact: $(deploymentPattern)-artifacts
           publishLocation: pipeline
 
       - task: PublishPipelineArtifact@1
         inputs:
           targetPath: $(build.artifactstagingdirectory)/common
-          artifact: common
+          artifact: common-artifacts
           publishLocation: pipeline
