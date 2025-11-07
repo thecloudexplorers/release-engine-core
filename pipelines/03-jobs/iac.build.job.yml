@@ -11,6 +11,18 @@ jobs:
       - template: ${{ parameters.deploymentSettings.configurationFilePath }}/metadata.yml@self
     steps:
 
+      - checkout: self # release-engine-core repository
+        path: s/checkoutDirectory
+        sparseCheckoutPatterns: |
+          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+          **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
+          **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
+          **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+          **/common/scripts/**
+
+      - powershell: |
+          Write-Host "Scenario 3: Internal Pattern test"      
+
       # For test pipelines inside release-engine-core repo (single repository)
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
           
@@ -35,7 +47,7 @@ jobs:
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
               - powershell: |
-                  Write-Host "Scenario 2: External Pattern test"                  
+                  Write-Host "Scenario 2: External Pattern test"
 
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 3
 
