@@ -198,19 +198,19 @@ jobs:
               TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
               flattenFolders: false
 
-      # When both configurationPipelineContext and patternContext are external
-      - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'external')) }}:
-          - task: CopyFiles@2
-            displayName: Copying Deployment Pattern content (external pattern)
-            inputs:
-              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/pattern
-              Contents: |
-                **/*.bicep
-                !tests/**
-                !examples/**
-                !deployment-pattern.yml
-              TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
-              flattenFolders: false
+      # # When both configurationPipelineContext and patternContext are external
+      # - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'external')) }}:
+      #     - task: CopyFiles@2
+      #       displayName: Copying Deployment Pattern content (external pattern)
+      #       inputs:
+      #         SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/pattern
+      #         Contents: |
+      #           **/*.bicep
+      #           !tests/**
+      #           !examples/**
+      #           !deployment-pattern.yml
+      #         TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
+      #         flattenFolders: false
 
       # Copy common scripts - handle internal vs external context
       - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
