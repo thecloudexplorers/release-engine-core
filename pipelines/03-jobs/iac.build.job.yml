@@ -162,8 +162,9 @@ jobs:
             !deployment-pattern.yml
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
           flattenFolders: true             
-      - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
-          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 2  
+      
+      - ${{ if ne(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
+          - ${{ if ne(parameters.patternSettings.isExternalPattern, 'false') }}: # 2  
       
               - task: CopyFiles@2
                 displayName: Copying common scripts content (external)
