@@ -96,9 +96,9 @@ jobs:
           Write-Host "\nVariables:"
           Get-ChildItem env:
 
-          Get-ChildItem $(Pipeline.Workspace) -recurse
-
           tree /F $(Pipeline.Workspace)
+
+          Get-ChildItem $(Pipeline.Workspace) -recurse
         displayName: Debug - Display Settings and Environment Variables
         condition: eq( variables['System.Debug'], 'true' )
 
@@ -106,7 +106,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copying content from Configuration repository (internal)
         inputs:
-          SourceFolder: $(Pipeline.Workspace)/checkoutDirectory
+          SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
           Contents: |
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
