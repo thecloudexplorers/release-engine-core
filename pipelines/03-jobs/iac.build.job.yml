@@ -96,6 +96,8 @@ jobs:
           Write-Host "\nVariables:"
           Get-ChildItem env:
 
+          Get-ChildItem $(Pipeline.Workspace) -recurse
+
           tree /F $(Pipeline.Workspace)
         displayName: Debug - Display Settings and Environment Variables
         condition: eq( variables['System.Debug'], 'true' )
