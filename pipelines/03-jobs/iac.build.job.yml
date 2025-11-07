@@ -50,7 +50,7 @@ jobs:
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
                   **/common/scripts/**
-              
+                      
       # Production pipelines - Configuration file is on its own repository
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}:
 
@@ -83,7 +83,6 @@ jobs:
                 sparseCheckoutPatterns: |
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
-              
 
           # Scenario 4: Production pipeline consuming a pattern from release-engine-core repository (internal pattern)
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 6
@@ -141,16 +140,29 @@ jobs:
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
           flattenFolders: true        
 
-      - task: CopyFiles@2
-        displayName: Copying Scripts artifacts
-        inputs:
-          SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
-          Contents: |
-            **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
-            **/common/scripts/**
-          TargetFolder: $(build.artifactstagingdirectory)/common
-          flattenFolders: false
+      # Copy common scripts - handle internal vs external context
+      - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: Copying common scripts content (internal)
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/common/scripts/
+              Contents: |
+                **/*.ps1
+                **/*.sh
+              TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+              flattenFolders: false
 
+      - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - task: CopyFiles@2
+            displayName: Copying common scripts content (external)
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts/
+              Contents: |
+                **/*.ps1
+                **/*.sh
+              TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+              flattenFolders: false
+      
       - task: PublishPipelineArtifact@1
         inputs:
           targetPath: $(build.artifactstagingdirectory)/$(deploymentPattern)
