@@ -210,27 +210,27 @@ jobs:
       #         flattenFolders: false
 
       # Copy common scripts - handle internal vs external context
-      - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
-          - task: CopyFiles@2
-            displayName: Copying common scripts content (internal)
-            inputs:
-              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/common/scripts/
-              Contents: |
-                **/*.ps1
-                **/*.sh
-              TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-              flattenFolders: false
+      # - ${{ if eq(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+      #     - task: CopyFiles@2
+      #       displayName: Copying common scripts content (internal)
+      #       inputs:
+      #         SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/common/scripts/
+      #         Contents: |
+      #           **/*.ps1
+      #           **/*.sh
+      #         TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+      #         flattenFolders: false
 
-      - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
-          - task: CopyFiles@2
-            displayName: Copying common scripts content (external)
-            inputs:
-              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts/
-              Contents: |
-                **/*.ps1
-                **/*.sh
-              TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-              flattenFolders: false
+      # - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+      - task: CopyFiles@2
+        displayName: Copying common scripts content (external)
+        inputs:
+          SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core
+          Contents: |
+            **/common/scripts/**/*.ps1
+            **/common/scripts/**/*.sh
+          TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+          flattenFolders: false
       
       # - task: CopyFiles@2
       #   displayName: Copying scripts content (flattened)
