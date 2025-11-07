@@ -36,6 +36,16 @@ jobs:
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
+              - task: CopyFiles@2
+                displayName: Copying common scripts content (external)
+                inputs:
+                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
+                  Contents: |
+                    **/*.ps1
+                    **/*.sh
+                  TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+                  flattenFolders: false                
+
           # Scenario 2: Pattern is in release-engine-core repository (internal pattern)
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: 
               - powershell: |
@@ -51,7 +61,6 @@ jobs:
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
                   **/common/scripts/**                
-         
       
               - task: CopyFiles@2
                 displayName: Copying common scripts content (internal)
@@ -95,12 +104,22 @@ jobs:
                 sparseCheckoutPatterns: |
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+              
+              - task: CopyFiles@2
+                displayName: Copying common scripts content (external)
+                inputs:
+                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
+                  Contents: |
+                    **/*.ps1
+                    **/*.sh
+                  TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+                  flattenFolders: false
 
           # Scenario 4: Production pipeline consuming a pattern from release-engine-core repository (internal pattern)
-          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 6
+          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}:
               - powershell: |
-                  Write-Host "Deployment Pipeline: Release Engine Pattern"
-                displayName: 'Deployment Pipeline: Release Engine Pattern'
+                  Write-Host "Deployment Pipeline: Release Engine Pattern - #4"
+                displayName: 'Deployment Pipeline: Release Engine Pattern - #4'
 
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
@@ -117,16 +136,15 @@ jobs:
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
                   
-
-          # - task: CopyFiles@2
-          #   displayName: Copying common scripts content (external)
-          #   inputs:
-          #     SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
-          #     Contents: |
-          #       **/*.ps1
-          #       **/*.sh
-          #     TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-          #     flattenFolders: false
+              - task: CopyFiles@2
+                displayName: Copying common scripts content (external)
+                inputs:
+                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
+                  Contents: |
+                    **/*.ps1
+                    **/*.sh
+                  TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+                  flattenFolders: false
 
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
@@ -163,18 +181,22 @@ jobs:
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
           flattenFolders: true             
       
-      - ${{ if ne(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
-          - ${{ if ne(parameters.patternSettings.isExternalPattern, 'false') }}: # 2  
+      # - ${{ if ne(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
+      #     - ${{ if ne(parameters.patternSettings.isExternalPattern, 'false') }}: # 2  
       
-              - task: CopyFiles@2
-                displayName: Copying common scripts content (external)
-                inputs:
-                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
-                  Contents: |
-                    **/*.ps1
-                    **/*.sh
-                  TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-                  flattenFolders: false
+      #         - task: CopyFiles@2
+      #           displayName: Copying common scripts content (external)
+      #           inputs:
+      #             SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
+      #             Contents: |
+      #               **/*.ps1
+      #               **/*.sh
+      #             TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+      #             flattenFolders: false
+
+
+      # - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}:
+      #     - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}:
 
       # - ${{ if and(eq(parameters.patternSettings.isExternalPattern, 'false'), eq(parameters.deploymentSettings.isTestPipeline, 'false')) }}:
       #     - task: CopyFiles@2
