@@ -148,7 +148,7 @@ jobs:
           Contents: |
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
             **/common/scripts/**
-          TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+          TargetFolder: $(build.artifactstagingdirectory)/common
           flattenFolders: false
 
       - task: PublishPipelineArtifact@1
@@ -159,6 +159,6 @@ jobs:
 
       - task: PublishPipelineArtifact@1
         inputs:
-          targetPath: $(build.artifactstagingdirectory)/common
+          targetPath: $(build.artifactstagingdirectory)
           artifact: common-artifacts
           publishLocation: pipeline
