@@ -17,7 +17,8 @@ extends:
       configurationFilePath: /patterns/templates/iac/subscription_scope_pattern/tests/_config
       # Indicates if this is an integrated pipeline running inside release-engine-core repo
       # Options: "internal" | "external" | "" (empty string)
-      configurationPipelineContext: "internal"   
+      configurationPipelineContext: "internal"
+      isTestPipeline: true
 
       environments:
         - name: development
