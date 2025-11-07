@@ -17,7 +17,7 @@ jobs:
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 2
               - powershell: |
                   Write-Host "Scenario 2: External Pattern test"
-                condition: eq( variables['System.Debug'], 'true' )
+                
               
               - checkout: self # pattern repository
                 path: s/checkoutDirectory
@@ -38,7 +38,7 @@ jobs:
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 3
               - powershell: |
                   Write-Host "Scenario 3: Internal Pattern test"
-                condition: eq( variables['System.Debug'], 'true' )
+                
               
               - checkout: self # release-engine-core repository
                 path: s/checkoutDirectory
@@ -56,7 +56,6 @@ jobs:
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 5
               - powershell: |
                   Write-Host "Scenario 5: Internal Pattern production"
-                condition: eq( variables['System.Debug'], 'true' )
 
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
@@ -87,7 +86,6 @@ jobs:
 
               - powershell: |
                   Write-Host "Scenario 6: External Pattern production"
-                condition: eq( variables['System.Debug'], 'true' )
 
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
