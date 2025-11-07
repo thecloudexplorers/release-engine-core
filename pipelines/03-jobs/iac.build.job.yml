@@ -15,6 +15,9 @@ jobs:
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
           
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 2
+              - powershell: |
+                  Write-Host "Scenario 2: External Pattern test"
+              
               - checkout: self # pattern repository
                 path: s/checkoutDirectory
                 sparseCheckoutPatterns: |
@@ -32,6 +35,9 @@ jobs:
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 3
+              - powershell: |
+                  Write-Host "Scenario 3: Internal Pattern test"
+              
               - checkout: self # release-engine-core repository
                 path: s/checkoutDirectory
                 sparseCheckoutPatterns: |
@@ -45,8 +51,10 @@ jobs:
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}: # 4
 
           # For production pipelines or external patterns
-          - ${{ if ne(parameters.patternSettings.isExternalPattern, 'true') }}: # 5
-              
+          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 5
+              - powershell: |
+                  Write-Host "Scenario 5: Internal Pattern production"
+
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
                 path: s/checkoutDirectory/configuration
@@ -72,7 +80,10 @@ jobs:
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
               
           # For production pipelines or external patterns
-          - ${{ if ne(parameters.patternSettings.isExternalPattern, 'false') }}: # 6
+          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 6
+
+              - powershell: |
+                  Write-Host "Scenario 6: External Pattern production"
 
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
@@ -143,7 +154,7 @@ jobs:
           - task: CopyFiles@2
             displayName: Copying Deployment Pattern content (internal)
             inputs:
-              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/${{ parameters.patternSettings.patternArtifactsPath }}
+              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/${{ parameters.patternSettings.patternArtifactsPath }}
               Contents: |
                 **/*.bicep
                 !tests/**
@@ -157,7 +168,7 @@ jobs:
           - task: CopyFiles@2
             displayName: Copying Deployment Pattern content (external config, internal pattern)
             inputs:
-              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/release-engine-core/${{ parameters.patternSettings.patternArtifactsPath }}
+              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/${{ parameters.patternSettings.patternArtifactsPath }}
               Contents: |
                 **/*.bicep
                 !tests/**
@@ -171,7 +182,7 @@ jobs:
           - task: CopyFiles@2
             displayName: Copying Deployment Pattern content (external pattern)
             inputs:
-              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/pattern
+              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/pattern
               Contents: |
                 **/*.bicep
                 !tests/**
@@ -185,7 +196,7 @@ jobs:
           - task: CopyFiles@2
             displayName: Copying common scripts content (internal)
             inputs:
-              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/common/scripts/
+              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/common/scripts/
               Contents: |
                 **/*.ps1
                 **/*.sh
@@ -196,7 +207,7 @@ jobs:
           - task: CopyFiles@2
             displayName: Copying common scripts content (external)
             inputs:
-              SourceFolder: $(Pipeline.Workspace)/checkoutDirectory/release-engine-core/common/scripts/
+              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts/
               Contents: |
                 **/*.ps1
                 **/*.sh
@@ -206,7 +217,7 @@ jobs:
       # - task: CopyFiles@2
       #   displayName: Copying scripts content (flattened)
       #   inputs:
-      #     SourceFolder: $(Pipeline.Workspace)/patternCheckoutDirectory/${{ parameters.deploymentSettings.configurationFilePath }}
+      #     SourceFolder: $(Pipeline.Workspace)/s/patternCheckoutDirectory/${{ parameters.deploymentSettings.configurationFilePath }}
       #     Contents: |
       #       **/scripts/**/*.ps1
       #       **/scripts/**/*.sh
@@ -215,13 +226,13 @@ jobs:
 
       # - task: PublishPipelineArtifact@1
       #   inputs:
-      #     targetPath: $(Pipeline.Workspace)/scriptsCheckoutDirectory
+      #     targetPath: $(Pipeline.Workspace)/s/scriptsCheckoutDirectory
       #     artifact: common
       #     publishLocation: pipeline
 
       # - task: PublishPipelineArtifact@1
       #   inputs:
-      #     targetPath: $(Pipeline.Workspace)/checkoutDirectory
+      #     targetPath: $(Pipeline.Workspace)/s/checkoutDirectory
       #     artifact: $(deploymentPattern)
       #     publishLocation: pipeline
 
