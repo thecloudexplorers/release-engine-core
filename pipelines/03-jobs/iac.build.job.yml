@@ -159,6 +159,6 @@ jobs:
 
       - task: PublishPipelineArtifact@1
         inputs:
-          targetPath: $(build.artifactstagingdirectory)
+          targetPath: $(build.artifactstagingdirectory)/common
           artifact: common-artifacts
           publishLocation: pipeline
