@@ -132,15 +132,15 @@ jobs:
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
 
-              - task: CopyFiles@2
-                displayName: Copying content from Configuration repository (internal)
-                inputs:
-                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/configuration
-                  Contents: |
-                    **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
-                    **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
-                  TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
-                  flattenFolders: false                  
+              # - task: CopyFiles@2
+              #   displayName: Copying content from Configuration repository (internal)
+              #   inputs:
+              #     SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/configuration
+              #     Contents: |
+              #       **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+              #       **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
+              #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
+              #     flattenFolders: false                  
 
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
