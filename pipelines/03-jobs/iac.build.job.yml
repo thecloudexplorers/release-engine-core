@@ -163,16 +163,16 @@ jobs:
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
           flattenFolders: true             
 
-      - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}:
-          - task: CopyFiles@2
-            displayName: Copying common scripts content (external)
-            inputs:
-              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
-              Contents: |
-                **/*.ps1
-                **/*.sh
-              TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-              flattenFolders: false
+      # - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}:
+      - task: CopyFiles@2
+        displayName: Copying common scripts content (external)
+        inputs:
+          SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
+          Contents: |
+            **/*.ps1
+            **/*.sh
+          TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+          flattenFolders: false
 
       # - ${{ if and(eq(parameters.patternSettings.isExternalPattern, 'false'), eq(parameters.deploymentSettings.isTestPipeline, 'false')) }}:
       #     - task: CopyFiles@2
