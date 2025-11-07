@@ -37,17 +37,17 @@ jobs:
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
-              - task: CopyFiles@2
-                displayName: Copying IaC artifacts (test)
-                inputs:
-                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
-                  Contents: |
-                    **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
-                    !tests/**
-                    !examples/**
-                    !deployment-pattern.yml
-                  TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
-                  flattenFolders: true
+              # - task: CopyFiles@2
+              #   displayName: Copying IaC artifacts (test)
+              #   inputs:
+              #     SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
+              #     Contents: |
+              #       **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
+              #       !tests/**
+              #       !examples/**
+              #       !deployment-pattern.yml
+              #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
+              #     flattenFolders: true
 
           # Scenario 3: Internal Pattern test - Validated!
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: 
@@ -64,17 +64,17 @@ jobs:
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
                   **/common/scripts/**
 
-              - task: CopyFiles@2
-                displayName: Copying IaC artifacts
-                inputs:
-                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
-                  Contents: |
-                    **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
-                    !tests/**
-                    !examples/**
-                    !deployment-pattern.yml
-                  TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
-                  flattenFolders: true                                
+              # - task: CopyFiles@2
+              #   displayName: Copying IaC artifacts
+              #   inputs:
+              #     SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
+              #     Contents: |
+              #       **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
+              #       !tests/**
+              #       !examples/**
+              #       !deployment-pattern.yml
+              #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
+              #     flattenFolders: true                                
 
       # Production / else
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}: # 4
