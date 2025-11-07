@@ -79,7 +79,7 @@ jobs:
                     csmParametersFile: $(patternArtifactsDirectory)/configuration/${{ parameters.jobSettings.stage.infrastructure.iac.iacParameterFileName }}
                     overrideParameters: ${{ parameters.jobSettings.stage.infrastructure.iac.customBicepParameters }}
                     deploymentMode: Incremental
-                    deploymentName: ${{ parameters.jobSettings.stage.infrastructure.iac.name }}-$(Build.BuildId)
+                    deploymentName: ${{ parameters.jobSettings.stage.infrastructure.iac.name }}-app_$(applicationAbbreviation)-$(Build.BuildId)
                     deploymentOutputs: deploymentOutputs
                     ${{ if eq(parameters.jobSettings.stage.infrastructure.iac.deploymentScope, 'ResourceGroup') }}:
                       resourceGroupName: ${{ parameters.jobSettings.stage.infrastructure.iac.resourceGroupName }}
