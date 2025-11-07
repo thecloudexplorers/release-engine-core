@@ -225,11 +225,11 @@ jobs:
       - task: CopyFiles@2
         displayName: Copying common scripts content (external)
         inputs:
-          SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core
+          SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
           Contents: |
-            **/common/scripts/**/*.ps1
-            **/common/scripts/**/*.sh
-          TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+            **/*.ps1
+            **/*.sh
+          TargetFolder: $(Build.ArtifactStagingDirectory)/common/scripts
           flattenFolders: false
       
       # - task: CopyFiles@2
