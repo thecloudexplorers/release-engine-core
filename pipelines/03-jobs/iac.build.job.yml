@@ -12,20 +12,41 @@ jobs:
     steps:
 
       # For test pipelines inside release-engine-core repo (single repository)
-      - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'true') }}:
-          - checkout: self
-            path: checkoutDirectory
-            sparseCheckoutPatterns: |
-              **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
-              **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
-              **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
-              **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
-              **/common/scripts/**
+      - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
+          
+          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 2
+              - checkout: self
+                path: checkoutDirectory
+                sparseCheckoutPatterns: |
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
+                  **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+                  **/common/scripts/**
+
+              - checkout: pattern
+                path: checkoutDirectory/pattern
+                sparseCheckoutPatterns: |
+                  **/*.bicep
+                  !tests/**
+                  !examples/**
+                  !deployment-pattern.yml              
+
+          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 3
+              - checkout: self
+                path: checkoutDirectory
+                sparseCheckoutPatterns: |
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
+                  **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+                  **/common/scripts/**
 
       # Production / else
-      - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}:
+      - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}: # 4
+
           # For production pipelines or external patterns
-          - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+          - ${{ if ne(parameters.patternSettings.isExternalPattern, 'true') }}: # 5
               
               # Checkout configuration files from self (configuration repository)
               - checkout: self
@@ -35,30 +56,39 @@ jobs:
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
 
-              # Checkout release-engine-core for common scripts and internal patterns
-              - ${{ if eq(parameters.patternSettings.patternContext, 'internal') }}:
-                  - checkout: release-engine-core
-                    path: checkoutDirectory/release-engine-core
-                    sparseCheckoutPatterns: |
-                      **/common/scripts/**
-                      **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+              # Checkout pattern from dedicated pattern repository
+              - checkout: pattern
+                path: checkoutDirectory/pattern
+                sparseCheckoutPatterns: |
+                  **/*.bicep
+                  !tests/**
+                  !examples/**
+                  !deployment-pattern.yml
 
-              # Checkout release-engine-core for common scripts only (when pattern is external)
-              - ${{ if eq(parameters.patternSettings.patternContext, 'external') }}:
-                  - checkout: release-engine-core
-                    path: checkoutDirectory/release-engine-core
-                    sparseCheckoutPatterns: |
-                      **/common/scripts/**
+              # Checkout release-engine-core         
+              - checkout: release-engine-core
+                path: checkoutDirectory/release-engine-core
+                sparseCheckoutPatterns: |
+                  **/common/scripts/**
+                  **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+              
+          # For production pipelines or external patterns
+          - ${{ if ne(parameters.patternSettings.isExternalPattern, 'false') }}: # 6
 
-              # Pattern is external from release-engine-core
-              - ${{ if eq(parameters.patternSettings.isExternalPattern,'true') }}:
-                  - checkout: pattern
-                    path: checkoutDirectory/pattern
-                    sparseCheckoutPatterns: |
-                      **/*.bicep
-                      !tests/**
-                      !examples/**
-                      !deployment-pattern.yml
+              # Checkout configuration files from self (configuration repository)
+              - checkout: self
+                path: checkoutDirectory/configuration
+                sparseCheckoutPatterns: |
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
+
+              # Checkout release-engine-core         
+              - checkout: release-engine-core
+                path: checkoutDirectory/release-engine-core
+                sparseCheckoutPatterns: |
+                  **/common/scripts/**
+                  **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
