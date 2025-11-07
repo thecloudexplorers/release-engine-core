@@ -49,17 +49,7 @@ jobs:
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
-                  **/common/scripts/**
-
-              - task: CopyFiles@2
-                displayName: Copying common scripts content (internal)
-                inputs:
-                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/common/scripts/
-                  Contents: |
-                    **/*.ps1
-                    **/*.sh
-                  TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-                  flattenFolders: false                  
+                  **/common/scripts/**                
                       
       # Production pipelines - Configuration file is on its own repository
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}:
@@ -172,6 +162,17 @@ jobs:
                 **/*.sh
               TargetFolder: $(build.artifactstagingdirectory)/common/scripts
               flattenFolders: false
+              
+      - ${{ else }}:
+          - task: CopyFiles@2
+            displayName: Copying common scripts content (internal)
+            inputs:
+              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/common/scripts/
+              Contents: |
+                **/*.ps1
+                **/*.sh
+              TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+              flattenFolders: false  
       
       - task: PublishPipelineArtifact@1
         inputs:
