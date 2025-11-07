@@ -1,14 +1,14 @@
 variables:
   
-  landingZoneName: "patterns" # Name of the Landing Zone
+  landingZoneName: "release-engine-core" # Name of the Landing Zone
 
   # Abbreviation of the landing zone
   # Allowed value: [a-z][0-9]{3}
-  landingZoneAbbreviation: "ptn" # Abbreviation of the Landing Zone Name
+  landingZoneAbbreviation: "rec" # Abbreviation of the Landing Zone Name
 
   # Name of the Application deployed in the Landing Zone
-  applicationName: "subscription-scope-pattern-test"
-  applicationAbbreviation: "sspt" # Abbreviation of the Application Name
+  applicationName: "test-release-engine-core"
+  applicationAbbreviation: "tstrec" # Abbreviation of the Application Name
   
   deploymentPattern: subscription_scope_pattern_test
   deploymentLocation: westeurope
