@@ -15,8 +15,7 @@ jobs:
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
           
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 2
-              - powershell: |
-                  Write-Host "Scenario 2: External Pattern test"
+
                 
               
               - checkout: self # pattern repository
@@ -35,9 +34,11 @@ jobs:
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
-          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 3
               - powershell: |
-                  Write-Host "Scenario 3: Internal Pattern test"
+                  Write-Host "Scenario 2: External Pattern test"                  
+
+          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 3
+
                 
               
               - checkout: self # release-engine-core repository
@@ -49,13 +50,15 @@ jobs:
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
                   **/common/scripts/**
 
+              - powershell: |
+                  Write-Host "Scenario 3: Internal Pattern test"                  
+
       # Production / else
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}: # 4
 
           # For production pipelines or external patterns
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 5
-              - powershell: |
-                  Write-Host "Scenario 5: Internal Pattern production"
+
 
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
@@ -81,11 +84,14 @@ jobs:
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
               
+
+              - powershell: |
+                  Write-Host "Scenario 5: Internal Pattern production"
+
           # For production pipelines or external patterns
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 6
 
-              - powershell: |
-                  Write-Host "Scenario 6: External Pattern production"
+
 
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
@@ -101,6 +107,9 @@ jobs:
                 sparseCheckoutPatterns: |
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+
+              - powershell: |
+                  Write-Host "Scenario 6: External Pattern production"
 
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
