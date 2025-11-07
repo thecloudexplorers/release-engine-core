@@ -107,27 +107,15 @@ jobs:
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
-                        - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}:
-              
-              - task: CopyFiles@2
-                displayName: Copying common scripts content (external)
-                inputs:
-                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
-                  Contents: |
-                    **/*.ps1
-                    **/*.sh
-                  TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-                  flattenFolders: false
-
-          - task: CopyFiles@2
-            displayName: Copying common scripts content (external)
-            inputs:
-              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
-              Contents: |
-                **/*.ps1
-                **/*.sh
-              TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-              flattenFolders: false
+          # - task: CopyFiles@2
+          #   displayName: Copying common scripts content (external)
+          #   inputs:
+          #     SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
+          #     Contents: |
+          #       **/*.ps1
+          #       **/*.sh
+          #     TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+          #     flattenFolders: false
 
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
