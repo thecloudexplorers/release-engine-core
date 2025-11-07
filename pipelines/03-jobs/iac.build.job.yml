@@ -41,8 +41,9 @@ jobs:
               - powershell: |
                   Write-Host "Test Pipeline: Internal Pattern - #2"
                 displayName: 'Test Pipeline: Internal Pattern - #2'
-
-              - checkout: self # release-engine-core repository
+              
+              # release-engine-core repository
+              - checkout: self 
                 path: s/checkoutDirectory
                 sparseCheckoutPatterns: |
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
@@ -51,7 +52,16 @@ jobs:
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
                   **/common/scripts/**                
          
-
+      
+              - task: CopyFiles@2
+                displayName: Copying common scripts content (internal)
+                inputs:
+                  SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/common/scripts
+                  Contents: |
+                    **/*.ps1
+                    **/*.sh
+                  TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+                  flattenFolders: false
                       
       # Production pipelines - Configuration file is on its own repository
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}:
@@ -106,6 +116,7 @@ jobs:
                 sparseCheckoutPatterns: |
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
+                  
 
           # - task: CopyFiles@2
           #   displayName: Copying common scripts content (external)
@@ -163,16 +174,16 @@ jobs:
               TargetFolder: $(build.artifactstagingdirectory)/common/scripts
               flattenFolders: false
 
-      - ${{ if and(eq(parameters.patternSettings.isExternalPattern, 'false'), eq(parameters.deploymentSettings.isTestPipeline, 'false')) }}:
-          - task: CopyFiles@2
-            displayName: Copying common scripts content (internal)
-            inputs:
-              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/common/scripts
-              Contents: |
-                **/*.ps1
-                **/*.sh
-              TargetFolder: $(build.artifactstagingdirectory)/common/scripts
-              flattenFolders: false         
+      # - ${{ if and(eq(parameters.patternSettings.isExternalPattern, 'false'), eq(parameters.deploymentSettings.isTestPipeline, 'false')) }}:
+      #     - task: CopyFiles@2
+      #       displayName: Copying common scripts content (internal)
+      #       inputs:
+      #         SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/common/scripts
+      #         Contents: |
+      #           **/*.ps1
+      #           **/*.sh
+      #         TargetFolder: $(build.artifactstagingdirectory)/common/scripts
+      #         flattenFolders: false
       
       
       
