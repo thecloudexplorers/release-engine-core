@@ -34,7 +34,7 @@ stages:
                 deploymentScope: Subscription
                 serviceConnection: $(serviceConnection)
                 iacMainFileName: multi_stage_pattern.prerequisite.bicep
-                iacParameterFileName: /parameters/multi_stage_pattern.prerequisite.parameters.json
+                iacParameterFileName: multi_stage_pattern.prerequisite.parameters.json
                 subscriptionId: $(subscriptionId)
                 preRequisiteStage: true
 
