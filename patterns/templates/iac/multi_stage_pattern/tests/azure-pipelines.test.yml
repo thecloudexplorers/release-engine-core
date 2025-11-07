@@ -14,10 +14,9 @@ extends:
   template: /patterns/templates/iac/multi_stage_pattern/deployment-pattern.yml
   parameters:
     deploymentSettings:
-      configurationFilePath: /patterns/templates/iac/multi_stage_pattern/tests/_config
-      # Indicates if this is an integrated pipeline running inside release-engine-core repo
-      # Options: "internal" | "external" | "" (empty string)
-      configurationPipelineContext: "internal"   
+      configurationFilePath: /patterns/templates/iac/multi_stage_pattern/tests/_config      
+      # Indicates if this is a test pipeline
+      # Must be set to test release-engine functionalities or patterns
       isTestPipeline: true
 
       environments:
