@@ -14,7 +14,7 @@ jobs:
 
       # For test pipelines inside release-engine-core repo (single repository)
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
-          
+
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 2
                               
               - checkout: self # pattern repository
@@ -164,9 +164,9 @@ jobs:
           - task: CopyFiles@2
             displayName: Copying Deployment Pattern content (internal)
             inputs:
-              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/${{ parameters.patternSettings.patternArtifactsPath }}
+              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
               Contents: |
-                **/*.bicep
+                **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
                 !tests/**
                 !examples/**
                 !deployment-pattern.yml
@@ -178,9 +178,9 @@ jobs:
           - task: CopyFiles@2
             displayName: Copying Deployment Pattern content (external config, internal pattern)
             inputs:
-              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/${{ parameters.patternSettings.patternArtifactsPath }}
+              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core
               Contents: |
-                **/*.bicep
+                **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
                 !tests/**
                 !examples/**
                 !deployment-pattern.yml
