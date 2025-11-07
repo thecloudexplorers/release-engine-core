@@ -33,7 +33,7 @@ stages:
                 deploymentScope: Subscription
                 serviceConnection: $(serviceConnection)
                 iacMainFileName: subscription_scope_pattern.bicep               
-                iacParameterFileName: /parameters/subscription_scope_pattern.parameters.json
+                iacParameterFileName: subscription_scope_pattern.parameters.json
                 subscriptionId: $(subscriptionId)
                 
                 # Use to override bicep parameters
