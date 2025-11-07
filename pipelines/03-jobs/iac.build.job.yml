@@ -221,17 +221,16 @@ jobs:
       #         TargetFolder: $(build.artifactstagingdirectory)/common/scripts
       #         flattenFolders: false
 
-      # - ${{ if ne(parameters.patternSettings.configurationPipelineContext, 'internal') }}:
+      # Copy common scripts - handle different scenarios with filter patterns
       - task: CopyFiles@2
-        displayName: Copying common scripts content (external)
+        displayName: Copying common scripts
         inputs:
-          SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core/common/scripts
+          SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
           Contents: |
-            **/*.ps1
-            **/*.sh
+            **/common/scripts/**/*.ps1
+            **/common/scripts/**/*.sh
           TargetFolder: $(Build.ArtifactStagingDirectory)/common/scripts
-          flattenFolders: false
-      
+          flattenFolders: false     
       # - task: CopyFiles@2
       #   displayName: Copying scripts content (flattened)
       #   inputs:
