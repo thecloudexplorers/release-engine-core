@@ -22,6 +22,7 @@ stages:
         # Indicates if this is an builtin pattern in the release-engine-core repo
         # Options: "internal" | "external" | "" (empty string)
         patternContext: internal
+        isExternalPattern: false
         configurationPipelineContext: ${{ parameters.deploymentSettings.configurationPipelineContext }}
         stages:
 

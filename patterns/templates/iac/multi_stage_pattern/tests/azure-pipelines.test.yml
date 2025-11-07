@@ -18,6 +18,7 @@ extends:
       # Indicates if this is an integrated pipeline running inside release-engine-core repo
       # Options: "internal" | "external" | "" (empty string)
       configurationPipelineContext: "internal"   
+      isTestPipeline: true
 
       environments:
         - name: development

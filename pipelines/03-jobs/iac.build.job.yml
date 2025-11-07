@@ -10,16 +10,15 @@ jobs:
     variables:
       - template: ${{ parameters.deploymentSettings.configurationFilePath }}/metadata.yml@self
     steps:
-  
 
-      # For test pipelines inside release-engine-core repo (single repository)
+      # Test Pipelines - Configuration file is in the same repository as the pattern
       - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'true') }}: # 1
 
-          # Scenario 2: Internal Pattern test - Validated!
+          # Scenario 1: Pattern is in its own repository (external pattern)
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: 
               - powershell: |
-                  Write-Host "Scenario 2: External Pattern test"
-                displayName: 'Scenario 2: External Pattern test'
+                  Write-Host "Test Pipeline: External Pattern - #1"
+                displayName: 'Test Pipeline: External Pattern - #1'
 
               - checkout: self # pattern repository
                 path: s/checkoutDirectory
@@ -37,24 +36,12 @@ jobs:
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
-              # - task: CopyFiles@2
-              #   displayName: Copying IaC artifacts (test)
-              #   inputs:
-              #     SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
-              #     Contents: |
-              #       **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
-              #       !tests/**
-              #       !examples/**
-              #       !deployment-pattern.yml
-              #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
-              #     flattenFolders: true
-
-          # Scenario 3: Internal Pattern test - Validated!
+          # Scenario 2: Pattern is in release-engine-core repository (internal pattern)
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: 
               - powershell: |
-                  Write-Host "Scenario 3: Internal Pattern test"
-                displayName: 'Scenario 3: Internal Pattern test'
-              
+                  Write-Host "Test Pipeline: Internal Pattern - #2"
+                displayName: 'Test Pipeline: Internal Pattern - #2'
+
               - checkout: self # release-engine-core repository
                 path: s/checkoutDirectory
                 sparseCheckoutPatterns: |
@@ -63,27 +50,15 @@ jobs:
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
                   **/common/scripts/**
+              
+      # Production pipelines - Configuration file is on its own repository
+      - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}:
 
-              # - task: CopyFiles@2
-              #   displayName: Copying IaC artifacts
-              #   inputs:
-              #     SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
-              #     Contents: |
-              #       **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
-              #       !tests/**
-              #       !examples/**
-              #       !deployment-pattern.yml
-              #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
-              #     flattenFolders: true                                
-
-      # Production / else
-      - ${{ if eq(parameters.deploymentSettings.isTestPipeline, 'false') }}: # 4
-
-          # For production pipelines or external patterns
-          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: # 5
+          # Scenario 3: Production pipeline consuming a pattern from dedicated pattern repository (external pattern)
+          - ${{ if eq(parameters.patternSettings.isExternalPattern, 'true') }}: 
               - powershell: |
-                  Write-Host "Scenario 5: Internal Pattern production"
-                displayName: 'Scenario 5: Internal Pattern production'
+                  Write-Host "Deployment Pipeline: Dedicated Pattern repository"
+                displayName: 'Deployment Pipeline: Dedicated Pattern repository'
 
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
@@ -110,11 +85,11 @@ jobs:
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
               
 
-          # For production pipelines or external patterns
+          # Scenario 4: Production pipeline consuming a pattern from release-engine-core repository (internal pattern)
           - ${{ if eq(parameters.patternSettings.isExternalPattern, 'false') }}: # 6
               - powershell: |
-                  Write-Host "Scenario 6: External Pattern production"
-                displayName: 'Scenario 6: External Pattern production'
+                  Write-Host "Deployment Pipeline: Release Engine Pattern"
+                displayName: 'Deployment Pipeline: Release Engine Pattern'
 
               # Checkout configuration files from self (configuration repository)
               - checkout: self # configuration repository
@@ -129,18 +104,7 @@ jobs:
                 path: s/checkoutDirectory/release-engine-core
                 sparseCheckoutPatterns: |
                   **/common/scripts/**
-                  **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
-
-
-              # - task: CopyFiles@2
-              #   displayName: Copying content from Configuration repository (internal)
-              #   inputs:
-              #     SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/configuration
-              #     Contents: |
-              #       **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
-              #       **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
-              #     TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
-              #     flattenFolders: false                  
+                  **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep                 
 
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
