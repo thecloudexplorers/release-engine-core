@@ -194,19 +194,19 @@ jobs:
               TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
               flattenFolders: false
 
-      # When configurationPipelineContext is external but patternContext is internal (pattern from release-engine-core)
-      - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'internal')) }}:
-          - task: CopyFiles@2
-            displayName: Copying Deployment Pattern content (external config, internal pattern)
-            inputs:
-              SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core
-              Contents: |
-                **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
-                !tests/**
-                !examples/**
-                !deployment-pattern.yml
-              TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
-              flattenFolders: false
+      # # When configurationPipelineContext is external but patternContext is internal (pattern from release-engine-core)
+      # - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'internal')) }}:
+      #     - task: CopyFiles@2
+      #       displayName: Copying Deployment Pattern content (external config, internal pattern)
+      #       inputs:
+      #         SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory/release-engine-core
+      #         Contents: |
+      #           **${{ parameters.patternSettings.patternArtifactsPath }}**/*.bicep
+      #           !tests/**
+      #           !examples/**
+      #           !deployment-pattern.yml
+      #         TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/iac
+      #         flattenFolders: false
 
       # # When both configurationPipelineContext and patternContext are external
       # - ${{ if and(ne(parameters.patternSettings.configurationPipelineContext, 'internal'), eq(parameters.patternSettings.patternContext, 'external')) }}:
