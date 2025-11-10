@@ -20,17 +20,28 @@ jobs:
       runOnce:
         deploy:
           steps:
-            # Install AzureDevOps.Tools module to import json configuration files as environment variables from powershell gallery
-            - pwsh: |
-                [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-                Install-Module -Name AzureDevOps.Tools -AllowPrerelease -Force -Scope CurrentUser -ErrorAction Stop
-                Import-Module -Name AzureDevOps.Tools -Force -ErrorAction Stop
-              displayName: Install and Import AzureDevOps.Tools module
+            # # Install AzureDevOps.Tools module to import json configuration files as environment variables from powershell gallery
+            # - pwsh: |
+            #     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+            #     Install-Module -Name AzureDevOps.Tools -AllowPrerelease -Force -Scope CurrentUser -ErrorAction Stop
+            #     Import-Module -Name AzureDevOps.Tools -Force -ErrorAction Stop
+            #   displayName: Install and Import AzureDevOps.Tools module
 
-            # Import values from json files as environment variables from ${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc
-            - pwsh: |
-                Import-JsonAsEnvironmentVariables -JsonFilePath '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop
+            # # Import values from json files as environment variables from ${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc
+            # - pwsh: |
+            #     Import-JsonAsEnvironmentVariables -JsonFilePath '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop
+            #   displayName: Import JSON configuration as environment variables
+
+            - task: PowerShell@2 #TODO: Move to dedicated task
               displayName: Import JSON configuration as environment variables
+              inputs:
+                targetType: filePath
+                failOnStderr: true
+                showWarnings: true
+                pwsh: true
+                filePath: $(Pipeline.Workspace)/common/scripts/Import-JsonAsEnvironmentVariables.ps1
+                arguments: |
+                  -JsonFilePath '$(patternArtifactsDirectory)/configuration/metadata.jsonc'
 
             # Debug step to show settings and environment variables
             # Only runs if System.Debug is set to true
@@ -84,7 +95,6 @@ jobs:
                     templateLocation: "Linked artifact"
                     csmFile: $(iacMainFilePath)
                     # TODO: For each stage provide the specific configuration if multiple IaC per stage
-
                     csmParametersFile: $(patternArtifactsDirectory)/configuration/${{ parameters.jobSettings.stage.infrastructure.iac.iacParameterFileName }}
                     overrideParameters: ${{ parameters.jobSettings.stage.infrastructure.iac.customBicepParameters }}
                     deploymentMode: Incremental
