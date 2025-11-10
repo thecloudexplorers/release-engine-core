@@ -24,6 +24,7 @@ jobs:
                 path: s/checkoutDirectory
                 sparseCheckoutPatterns: |
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.jsonc
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
@@ -59,6 +60,7 @@ jobs:
                 path: s/checkoutDirectory
                 sparseCheckoutPatterns: |
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.jsonc
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
@@ -90,6 +92,7 @@ jobs:
                 path: s/checkoutDirectory/configuration
                 sparseCheckoutPatterns: |
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.jsonc
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
 
@@ -120,6 +123,7 @@ jobs:
                 path: s/checkoutDirectory/configuration
                 sparseCheckoutPatterns: |
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+                  **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.jsonc
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
                   **${{ parameters.deploymentSettings.configurationFilePath }}/**/scripts/**
 
@@ -164,7 +168,7 @@ jobs:
           SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
           Contents: |
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
-            **${{ parameters.deploymentSettings.configurationFilePath }}/*.jsonc
+            **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.jsonc
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
           flattenFolders: true
