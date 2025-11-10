@@ -25,13 +25,13 @@ jobs:
             - powershell: |
                 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
                 Install-Module -Name AzureDevOps.Tools -AllowPrerelease -Force -Scope CurrentUser -ErrorAction Stop
-              displayName: Install AzureDevOps.Tools module
+                Import-Module -Name AzureDevOps.Tools -Force -ErrorAction Stop
+                displayName: Install and Import AzureDevOps.Tools module
             
             # Import values from json files as environment variables from ${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc
-            # Using Install-Module -Name AzureDevOps.Tools -RequiredVersion 0.4.1-alpha -AllowPrerelease
             - powershell: |
                 Import-JsonAsEnvironmentVariables -JsonFilePath '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop
-              displayName: Import JSON configuration as environment variables              
+                displayName: Import JSON configuration as environment variables              
 
             # Debug step to show settings and environment variables
             # Only runs if System.Debug is set to true
