@@ -1,5 +1,6 @@
 variables:
   environmentAbbreviation: tst
+  environmentName: test
   deploymentLocation: westeurope
   
   # Required for subscription scoped deployments

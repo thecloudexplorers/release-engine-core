@@ -1,5 +1,6 @@
 variables:
   environmentAbbreviation: dev
+  environmentName: development
   deploymentLocation: westeurope
   
   # Required for subscription scoped deployments

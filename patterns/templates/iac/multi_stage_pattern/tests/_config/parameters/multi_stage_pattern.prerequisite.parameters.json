@@ -3,7 +3,11 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "tags": {
-      "value": {}
+      "value": {
+        "Environment": "#{environmentName}#",
+        "Application": "#{applicationName}#",
+        "TestResource": "true"
+      }
     },
     "resourceGroupName": {
       "value": "#{applicationAbbreviation}#-#{environmentAbbreviation}#-rg001"
