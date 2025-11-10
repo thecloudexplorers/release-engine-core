@@ -29,7 +29,7 @@ jobs:
 
             # Import values from json files as environment variables from ${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc
             - pwsh: |
-                Import-JsonAsEnvironmentVariable -JsonFilePath '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop
+                Import-JsonAsEnvironmentVariable -Path '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop
               displayName: Import JSON configuration as environment variables
 
             # - task: PowerShell@2 #TODO: Move to dedicated task
