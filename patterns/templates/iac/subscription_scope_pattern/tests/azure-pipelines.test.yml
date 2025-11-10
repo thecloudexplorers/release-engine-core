@@ -4,9 +4,9 @@ trigger:
   branches:
     include:
       - users/*
-  paths:
-    include:
-      - patterns/templates/iac/subscription_scope_pattern/**
+  # paths:
+  #   include:
+  #     - patterns/templates/iac/subscription_scope_pattern/**
 
 pr:
   branches:

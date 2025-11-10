@@ -21,9 +21,10 @@ jobs:
         deploy:
           steps:
             
-            # Install AzureDevOps.Tools module to import json configuration files as environment variables
+            # Install AzureDevOps.Tools module to import json configuration files as environment variables from powershell gallery
             - powershell: |
-                Install-Module -Name AzureDevOps.Tools -AllowPrerelease -Force -Scope CurrentUser
+                [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+                Install-Module -Name AzureDevOps.Tools -AllowPrerelease -Force -Scope CurrentUser -ErrorAction Stop
               displayName: Install AzureDevOps.Tools module
             
             # Import values from json files as environment variables from ${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc
