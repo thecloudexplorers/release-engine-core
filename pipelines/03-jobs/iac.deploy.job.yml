@@ -25,8 +25,7 @@ jobs:
             - powershell: |
                 Import-Module AzureDevOps.Tools -RequiredVersion 0.4.1-alpha -AllowPrerelease -Force
                 Import-JsonAsEnvironmentVariables -JsonFilePath '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop
-              displayName: Import JSON configuration as environment variables
-              pwsh: true              
+              displayName: Import JSON configuration as environment variables              
 
             # Debug step to show settings and environment variables
             # Only runs if System.Debug is set to true
