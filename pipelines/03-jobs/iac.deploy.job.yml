@@ -39,7 +39,7 @@ jobs:
                 failOnStderr: true
                 showWarnings: true
                 pwsh: true
-                filePath: $(Pipeline.Workspace)/common/scripts/Import-JsonAsEnvironmentVariables.ps1
+                filePath: $(Pipeline.Workspace)/common/scripts/Import-JsonAsEnvironmentVariable.ps1
                 arguments: |
                   -JsonFilePath '$(patternArtifactsDirectory)/configuration/metadata.jsonc'
 
