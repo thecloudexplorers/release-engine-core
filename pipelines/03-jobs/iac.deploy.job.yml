@@ -8,11 +8,11 @@ jobs:
   - deployment: workload_deployment_${{ parameters.jobSettings.environment }}
     displayName: Azure Deployment
     environment: ${{ parameters.jobSettings.environment }}
-    variables:       
+    variables:
       - template: ${{ parameters.patternSettings.configurationFilePath }}/metadata.yml@self
-      
-      - name: patternArtifactsDirectory        
-        value: $(Pipeline.Workspace)/$(deploymentPattern)/      
+
+      - name: patternArtifactsDirectory
+        value: $(Pipeline.Workspace)/$(deploymentPattern)/
       - name: iacMainFilePath
         value: $(patternArtifactsDirectory)/iac/${{ parameters.jobSettings.stage.infrastructure.iac.iacMainFileName }}
 
@@ -20,18 +20,17 @@ jobs:
       runOnce:
         deploy:
           steps:
-            
             # Install AzureDevOps.Tools module to import json configuration files as environment variables from powershell gallery
             - pwsh: |
                 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
                 Install-Module -Name AzureDevOps.Tools -AllowPrerelease -Force -Scope CurrentUser -ErrorAction Stop
                 Import-Module -Name AzureDevOps.Tools -Force -ErrorAction Stop
-                displayName: Install and Import AzureDevOps.Tools module
-            
+              displayName: Install and Import AzureDevOps.Tools module
+
             # Import values from json files as environment variables from ${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc
             - pwsh: |
                 Import-JsonAsEnvironmentVariables -JsonFilePath '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop
-                displayName: Import JSON configuration as environment variables              
+              displayName: Import JSON configuration as environment variables
 
             # Debug step to show settings and environment variables
             # Only runs if System.Debug is set to true
@@ -46,7 +45,7 @@ jobs:
                 tree /F $(Pipeline.Workspace)
               displayName: Debug - Display Settings and Environment Variables
               condition: eq( variables['System.Debug'], 'true' )
-           
+
             - task: PowerShell@2 #TODO: Move to dedicated task
               displayName: Replace Config Tokens
               inputs:
@@ -54,7 +53,7 @@ jobs:
                 failOnStderr: true
                 showWarnings: true
                 pwsh: true
-                filePath: $(Pipeline.Workspace)/common/scripts/Replace-ConfigurationFilesTokens.ps1                
+                filePath: $(Pipeline.Workspace)/common/scripts/Replace-ConfigurationFilesTokens.ps1
                 arguments: |
                   -ConfigFilesRootFolder '$(patternArtifactsDirectory)/configuration'
 
