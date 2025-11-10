@@ -8,6 +8,11 @@ trigger:
     include:
       - patterns/templates/iac/multi_stage_pattern/**
 
+pr:
+  branches:
+    include:
+      - main
+
 pool: MSHosted-WorkloadsPool
 
 extends:
