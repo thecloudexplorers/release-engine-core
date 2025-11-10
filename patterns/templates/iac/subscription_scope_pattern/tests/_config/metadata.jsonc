@@ -1,24 +1,17 @@
 {
-  // Full name of the ADO organization tied to the tenant.
-  "ado_org_name": "thecloudexplorers",
-  // Full name of the area
-  "landing_zone_name": "Azure DevOps Deployment Patterns",
-  // Full name of the solution
-  // Acronym of the landing zone
-  // Allowed value: [a-z][0-9]{3}
-  "landing_zone_name_abbreviation": "adp",
-  // Full name of the solution
-  "solution_name": "Multi-Stage Deployment Pattern",
-  // Description of the solution, try to be as descriptive as possible
-  // Acronym of the solution.
-  // Allowed value: [a-z][0-9]{3}
-  "applicationName": "test-release-engine-core",
-  "applicationAbbreviation": "msp",
+  // Name of the Landing Zone
+  "landingZoneName": "release-engine-core",
 
-  // Description of the solution, try to be as descriptive as possible
-  "solution_description": "Multi-Stage Deployment Pattern solution.",
-  // These are the Landing Zone level injected solution owners
-  // These users are granted the Owner role on all the security groups part of this solution
-  // Allowed value: UPN
-  "primary_owner": "camargo.wes@gmail.com"
+  // Abbreviation of the landing zone
+  // Allowed value: [a-z][0-9]{3}
+  "landingZoneAbbreviation": "rec",
+
+  // Name of the Application deployed in the Landing Zone
+  "applicationName": "test-release-engine-core",
+
+  // Abbreviation of the Application Name
+  "applicationAbbreviation": "tstrec",
+
+  "deploymentPattern": "subscription_scope_pattern_test",
+  "deploymentLocation": "westeurope"
 }
