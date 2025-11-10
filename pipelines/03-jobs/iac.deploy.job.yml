@@ -22,16 +22,26 @@ jobs:
           steps:
             
             # Install AzureDevOps.Tools module to import json configuration files as environment variables from powershell gallery
-            - powershell: |
+            - task: PowerShell@2
+              displayName: Install and Import AzureDevOps.Tools module
+              inputs:
+              pwsh: true
+              targetType: inline
+              failOnStderr: true
+              script: |
                 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
                 Install-Module -Name AzureDevOps.Tools -AllowPrerelease -Force -Scope CurrentUser -ErrorAction Stop
                 Import-Module -Name AzureDevOps.Tools -Force -ErrorAction Stop
-                displayName: Install and Import AzureDevOps.Tools module
             
             # Import values from json files as environment variables from ${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc
-            - powershell: |
-                Import-JsonAsEnvironmentVariables -JsonFilePath '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop
-                displayName: Import JSON configuration as environment variables              
+            - task: PowerShell@2
+              displayName: Import JSON configuration as environment variables
+              inputs:
+              pwsh: true
+              targetType: inline
+              failOnStderr: true
+              script: |
+                Import-JsonAsEnvironmentVariables -JsonFilePath '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop           
 
             # Debug step to show settings and environment variables
             # Only runs if System.Debug is set to true
