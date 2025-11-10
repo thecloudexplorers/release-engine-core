@@ -13,6 +13,7 @@ stages:
   - template: /pipelines/02-stages/iac.deploy.stage.yml
     parameters:
       patternSettings: ${{ parameters.patternSettings }}
+      deploymentSettings: ${{ parameters.deploymentSettings }}
   
   - stage: debug_stage_release_engine
     displayName: Debug - Release Engine

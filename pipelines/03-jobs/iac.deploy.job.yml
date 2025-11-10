@@ -1,4 +1,6 @@
 parameters:
+  - name: deploymentSettings
+    type: object
   - name: patternSettings
     type: object
   - name: jobSettings

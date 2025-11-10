@@ -1,4 +1,6 @@
 parameters:
+  - name: deploymentSettings
+    type: object
   - name: patternSettings
     type: object
 
@@ -54,7 +56,8 @@ stages:
             jobs:
               - template: /pipelines/03-jobs/iac.deploy.job.yml
                 parameters:
-                  patternSettings: ${{ parameters.patternSettings }}                  
+                  deploymentSettings: ${{ parameters.deploymentSettings }}
+                  patternSettings: ${{ parameters.patternSettings }}
                   jobSettings:
                     environment: ${{ env.name }}
                     stage: ${{ stage }}
