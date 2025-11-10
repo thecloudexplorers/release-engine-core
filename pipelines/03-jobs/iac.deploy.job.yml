@@ -31,6 +31,7 @@ jobs:
             - pwsh: |
                 Import-JsonAsEnvironmentVariable -Path '$(patternArtifactsDirectory)/configuration/metadata.jsonc' -ErrorAction Stop
               displayName: Import JSON configuration as environment variables
+              continueOnError: true
 
             # Debug step to show settings and environment variables
             # Only runs if System.Debug is set to true
