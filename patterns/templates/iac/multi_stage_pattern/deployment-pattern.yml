@@ -13,6 +13,7 @@ stages:
 
   - template: /pipelines/01-orchestrators/pattern.orchestrator.yml
     parameters:
+      deploymentSettings: ${{ parameters.deploymentSettings }}
       patternSettings:
         name: multi_stage_pattern
         configurationFilePath: ${{ parameters.deploymentSettings.configurationFilePath }}
@@ -21,6 +22,7 @@ stages:
         # Indicates if this is an builtin pattern in the release-engine-core repo
         # Options: "internal" | "external" | "" (empty string)
         patternContext: internal
+        isExternalPattern: false
         configurationPipelineContext: ${{ parameters.deploymentSettings.configurationPipelineContext }}
         stages:
 
@@ -32,7 +34,7 @@ stages:
                 deploymentScope: Subscription
                 serviceConnection: $(serviceConnection)
                 iacMainFileName: multi_stage_pattern.prerequisite.bicep
-                iacParameterFileName: /parameters/multi_stage_pattern.prerequisite.parameters.json
+                iacParameterFileName: multi_stage_pattern.prerequisite.parameters.json
                 subscriptionId: $(subscriptionId)
                 preRequisiteStage: true
 
@@ -44,7 +46,7 @@ stages:
                 deploymentScope: Subscription
                 serviceConnection: $(serviceConnection)
                 iacMainFileName: multi_stage_pattern.dependent.bicep
-                iacParameterFileName: /parameters/multi_stage_pattern.dependent1.parameters.json
+                iacParameterFileName: multi_stage_pattern.dependent1.parameters.json
                 subscriptionId: $(subscriptionId)
                 dependsOn: prerequisite_stage
                 # lastInStage: true 
@@ -57,7 +59,7 @@ stages:
                 deploymentScope: Subscription
                 serviceConnection: $(serviceConnection)
                 iacMainFileName: multi_stage_pattern.dependent.bicep
-                iacParameterFileName: /parameters/multi_stage_pattern.dependent2.parameters.json
+                iacParameterFileName: multi_stage_pattern.dependent2.parameters.json
                 subscriptionId: $(subscriptionId)
                 dependsOn: prerequisite_stage
                 # lastInStage: true
@@ -70,13 +72,13 @@ stages:
                 deploymentScope: Subscription
                 serviceConnection: $(serviceConnection)
                 iacMainFileName: multi_stage_pattern.dependent.bicep
-                iacParameterFileName: /parameters/multi_stage_pattern.dependent3.parameters.json
+                iacParameterFileName: multi_stage_pattern.dependent3.parameters.json
                 subscriptionId: $(subscriptionId)
                 dependsOn: dependent_stage1
                 # lastInStage: true
 
- # This debug stage is optional and can be used to output parameters and variables for troubleshooting purposes
- # The debug stage can be omitted by commenting it out
+  # This debug stage is optional and can be used to output parameters and variables for troubleshooting purposes
+  # The debug stage can be omitted by commenting it out
   - stage: debug_stage_pattern
     displayName: Debug - Pattern Settings
     condition: eq( variables['System.Debug'], 'true' )

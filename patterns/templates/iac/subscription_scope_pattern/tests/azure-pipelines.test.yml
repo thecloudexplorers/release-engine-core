@@ -8,16 +8,23 @@ trigger:
     include:
       - patterns/templates/iac/subscription_scope_pattern/**
 
+pr:
+  branches:
+    include:
+      - main
+
 pool: MSHosted-WorkloadsPool
+
+
 
 extends:
   template: /patterns/templates/iac/subscription_scope_pattern/deployment-pattern.yml
   parameters:
     deploymentSettings:
       configurationFilePath: /patterns/templates/iac/subscription_scope_pattern/tests/_config
-      # Indicates if this is an integrated pipeline running inside release-engine-core repo
-      # Options: "internal" | "external" | "" (empty string)
-      configurationPipelineContext: "internal"   
+      # Indicates if this is a test pipeline
+      # Must be set to test release-engine functionalities or patterns
+      isTestPipeline: true
 
       environments:
         - name: development

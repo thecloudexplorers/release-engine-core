@@ -1,4 +1,4 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.8 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.8" pages="10">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.8 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.8" pages="11">
   <diagram name="01-Concept" id="JGfZtABeqXyQSt0rPt5V">
     <mxGraphModel dx="1995" dy="1097" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -82,18 +82,18 @@
     </mxGraphModel>
   </diagram>
   <diagram name="02-Workload Landing Zones" id="uZYudVQPHU_vc_ltYV39">
-    <mxGraphModel dx="3875" dy="1807" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1450" dy="1021" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="n1wj8ilp30sT0dtZRg4E-35" value="&lt;span style=&quot;font-size: 16px;&quot;&gt;Workloads definitions&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="140" y="-360" width="220" height="140" as="geometry" />
+          <mxGeometry x="140" y="-360" width="220" height="280" as="geometry" />
         </mxCell>
         <mxCell id="n1wj8ilp30sT0dtZRg4E-36" value="&lt;span style=&quot;font-size: 16px;&quot;&gt;Workloads definitions&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="130" y="-350" width="220" height="140" as="geometry" />
+          <mxGeometry x="130" y="-350" width="220" height="280" as="geometry" />
         </mxCell>
         <mxCell id="n1wj8ilp30sT0dtZRg4E-37" value="&lt;span style=&quot;font-size: 16px;&quot;&gt;Application definitions&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="120" y="-340" width="220" height="140" as="geometry" />
+          <mxGeometry x="120" y="-340" width="220" height="280" as="geometry" />
         </mxCell>
         <mxCell id="n1wj8ilp30sT0dtZRg4E-38" style="shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#009CCC;strokeWidth=3;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" parent="1" source="n1wj8ilp30sT0dtZRg4E-52" target="AePoLHNEawQoPUJs_e6X-6" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -101,24 +101,17 @@
             <mxPoint x="-140" y="-410" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="n1wj8ilp30sT0dtZRg4E-39" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Release engine&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=bottom;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="120" y="-120" width="220" height="160" as="geometry" />
-        </mxCell>
-        <mxCell id="n1wj8ilp30sT0dtZRg4E-40" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#009CCC;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=3;" parent="1" source="n1wj8ilp30sT0dtZRg4E-39" target="AePoLHNEawQoPUJs_e6X-9" edge="1">
+        <mxCell id="n1wj8ilp30sT0dtZRg4E-40" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#009CCC;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=3;" parent="1" source="n1wj8ilp30sT0dtZRg4E-41" target="AePoLHNEawQoPUJs_e6X-9" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="340" y="-5.78947368421052" as="targetPoint" />
+            <mxPoint x="340" y="-40" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="n1wj8ilp30sT0dtZRg4E-41" value="release engine&amp;nbsp;&lt;div&gt;core&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;shape=parallelogram;perimeter=parallelogramPerimeter;fixedSize=1;" parent="1" vertex="1">
-          <mxGeometry x="170" y="-70" width="120" height="60" as="geometry" />
+          <mxGeometry x="170" y="-150" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="n1wj8ilp30sT0dtZRg4E-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=1;strokeColor=#4D4D4D;dashed=1;" parent="1" source="n1wj8ilp30sT0dtZRg4E-64" target="n1wj8ilp30sT0dtZRg4E-41" edge="1">
           <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="n1wj8ilp30sT0dtZRg4E-43" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#009CCC;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=3;" parent="1" source="n1wj8ilp30sT0dtZRg4E-37" target="AePoLHNEawQoPUJs_e6X-8" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="390" y="-180.20833333333326" as="targetPoint" />
-          </mxGeometry>
         </mxCell>
         <mxCell id="n1wj8ilp30sT0dtZRg4E-50" value="Workload Landing Zone Configuration" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontSize=16;fontStyle=1;fillColor=default;" parent="1" vertex="1">
           <mxGeometry x="-300" y="-360" width="320" height="140" as="geometry" />
@@ -153,29 +146,31 @@
         <mxCell id="n1wj8ilp30sT0dtZRg4E-64" value="pattern definitions" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
           <mxGeometry x="170" y="-280" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="AePoLHNEawQoPUJs_e6X-2" value="&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Definition of&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;font-size: 16px; background-color: initial;&quot;&gt;Application&amp;nbsp;&lt;/span&gt;&lt;/h1&gt;&lt;p style=&quot;color: rgb(0, 0, 0); font-size: 12px; text-align: left;&quot;&gt;&lt;/p&gt;&lt;ul style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;A resource or set of resources that shares a common lifecycle.&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;In Azure It must belong to the same resource group&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Ideally its deployment must not depend on external resources&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+        <mxCell id="AePoLHNEawQoPUJs_e6X-2" value="&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Definition of&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;font-size: 16px; background-color: initial;&quot;&gt;Application&amp;nbsp;&lt;/span&gt;&lt;/h1&gt;&lt;p style=&quot;color: rgb(0, 0, 0); font-size: 12px; text-align: left;&quot;&gt;&lt;/p&gt;&lt;ul style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;A resource or set of resources that shares a common lifecycle.&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;In Azure It must belong to the same resource group&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Ideally its deployment must not depend on external resources&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
           <mxGeometry x="-320" y="120" width="240" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="AePoLHNEawQoPUJs_e6X-6" value="&lt;h1 style=&quot;color: rgb(51, 51, 51); margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;What to deploy -&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;font-size: 16px; background-color: initial;&quot;&gt;Application Landing Zones&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 16px;&quot;&gt;configuration&lt;/span&gt;&lt;/h1&gt;&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;p style=&quot;color: rgb(51, 51, 51); font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;/p&gt;&lt;ul style=&quot;color: rgb(51, 51, 51); font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;li&gt;Configurations necessary to deploy an application&lt;/li&gt;&lt;li&gt;CICD Pipeline&lt;/li&gt;&lt;ul&gt;&lt;li&gt;Common pipelines reference&lt;/li&gt;&lt;li&gt;Configuration details&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;&lt;/h1&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#666600;" vertex="1" parent="1">
+        <mxCell id="AePoLHNEawQoPUJs_e6X-6" value="&lt;h1 style=&quot;color: rgb(51, 51, 51); margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;What to deploy -&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;font-size: 16px; background-color: initial;&quot;&gt;Application Landing Zones&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 16px;&quot;&gt;configuration&lt;/span&gt;&lt;/h1&gt;&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;p style=&quot;color: rgb(51, 51, 51); font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;/p&gt;&lt;ul style=&quot;color: rgb(51, 51, 51); font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;li&gt;Configurations necessary to deploy an application&lt;/li&gt;&lt;li&gt;CICD Pipeline&lt;/li&gt;&lt;ul&gt;&lt;li&gt;Common pipelines reference&lt;/li&gt;&lt;li&gt;Configuration details&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;&lt;/h1&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#666600;" parent="1" vertex="1">
           <mxGeometry x="-320" y="-150" width="320" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="AePoLHNEawQoPUJs_e6X-8" value="&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;What to deploy - Application Landing Zones&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;color: rgb(51, 51, 51); margin-top: 0px;&quot;&gt;&lt;p style=&quot;color: rgb(0, 0, 0); font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;/p&gt;&lt;ul style=&quot;color: rgb(0, 0, 0); font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;li&gt;All necessary components to deploy an application,&amp;nbsp;&lt;b&gt;except the configuration&lt;/b&gt;&lt;/li&gt;&lt;li&gt;CICD Pipeline Template&lt;/li&gt;&lt;li&gt;Specific scripts definitions&lt;/li&gt;&lt;li&gt;Common IaC application module reference (1x1 relationship)&lt;/li&gt;&lt;li&gt;Common&amp;nbsp;scripts reference&lt;/li&gt;&lt;li&gt;Common&amp;nbsp;pipelines reference&lt;/li&gt;&lt;/ul&gt;&lt;/h1&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#666600;" vertex="1" parent="1">
+        <mxCell id="AePoLHNEawQoPUJs_e6X-8" value="&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;What to deploy - Application Landing Zones&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;color: rgb(51, 51, 51); margin-top: 0px;&quot;&gt;&lt;p style=&quot;color: rgb(0, 0, 0); font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;/p&gt;&lt;ul style=&quot;color: rgb(0, 0, 0); font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;li&gt;All necessary components to deploy an application,&amp;nbsp;&lt;b&gt;except the configuration&lt;/b&gt;&lt;/li&gt;&lt;li&gt;CICD Pipeline Template&lt;/li&gt;&lt;li&gt;Specific scripts definitions&lt;/li&gt;&lt;li&gt;Common IaC application module reference (1x1 relationship)&lt;/li&gt;&lt;li&gt;Common&amp;nbsp;scripts reference&lt;/li&gt;&lt;li&gt;Common&amp;nbsp;pipelines reference&lt;/li&gt;&lt;/ul&gt;&lt;/h1&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#666600;" parent="1" vertex="1">
           <mxGeometry x="480" y="-370" width="340" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="AePoLHNEawQoPUJs_e6X-9" value="&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;How to deploy&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;p style=&quot;font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;/p&gt;&lt;ul style=&quot;font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;li&gt;Common pipeline definitions abstracting the deployment&amp;nbsp;&lt;/li&gt;&lt;li&gt;Common&amp;nbsp;scripts that can be used by different applications&lt;/li&gt;&lt;li&gt;Common reusable Iac modules&lt;/li&gt;&lt;ul&gt;&lt;li&gt;Resources - Lego pieces&lt;/li&gt;&lt;li&gt;Applications - Lego Sets&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;&lt;/h1&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#666600;" vertex="1" parent="1">
+        <mxCell id="AePoLHNEawQoPUJs_e6X-9" value="&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;How to deploy&lt;/font&gt;&lt;/h1&gt;&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;p style=&quot;font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;/p&gt;&lt;ul style=&quot;font-size: 12px; font-weight: 400; text-align: left;&quot;&gt;&lt;li&gt;Common pipeline definitions abstracting the deployment&amp;nbsp;&lt;/li&gt;&lt;li&gt;Common&amp;nbsp;scripts that can be used by different applications&lt;/li&gt;&lt;li&gt;Common reusable Iac modules&lt;/li&gt;&lt;ul&gt;&lt;li&gt;Resources - Lego pieces&lt;/li&gt;&lt;li&gt;Applications - Lego Sets&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;&lt;/h1&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#666600;" parent="1" vertex="1">
           <mxGeometry x="480" y="-120" width="340" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="AePoLHNEawQoPUJs_e6X-10" value="&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Definition of&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;font-size: 16px; background-color: initial;&quot;&gt;Pattern&lt;/span&gt;&lt;/h1&gt;&lt;p style=&quot;color: rgb(0, 0, 0); font-size: 12px; text-align: left;&quot;&gt;&lt;/p&gt;&lt;ul style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;A set of infrastructure as code resources that representas an application.&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;In Azure It must deploy into one resource group&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Ideally its deployment must highly coupled with other patterns&amp;nbsp;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+        <mxCell id="AePoLHNEawQoPUJs_e6X-10" value="&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Definition of&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;font-size: 16px; background-color: initial;&quot;&gt;Pattern&lt;/span&gt;&lt;/h1&gt;&lt;p style=&quot;color: rgb(0, 0, 0); font-size: 12px; text-align: left;&quot;&gt;&lt;/p&gt;&lt;ul style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;A set of infrastructure as code resources that representas an application.&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;In Azure It must deploy into one resource group&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Ideally its deployment must highly coupled with other patterns&amp;nbsp;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
           <mxGeometry x="-40" y="120" width="240" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="fZBfeCPTToNYOZaXe8xz-2" value="release-engine-pattern-template" style="shape=image;verticalLabelPosition=middle;labelBackgroundColor=default;verticalAlign=middle;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png;labelPosition=right;align=left;" vertex="1" parent="1">
-          <mxGeometry x="150" y="-190" width="20" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="fZBfeCPTToNYOZaXe8xz-4" value="release-engine-config-template" style="shape=image;verticalLabelPosition=middle;labelBackgroundColor=default;verticalAlign=middle;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png;labelPosition=right;align=left;" vertex="1" parent="1">
+        <mxCell id="fZBfeCPTToNYOZaXe8xz-4" value="release-engine-config-template" style="shape=image;verticalLabelPosition=middle;labelBackgroundColor=default;verticalAlign=middle;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png;labelPosition=right;align=left;" parent="1" vertex="1">
           <mxGeometry x="-240" y="-190" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="fZBfeCPTToNYOZaXe8xz-5" value="release-engine-core" style="shape=image;verticalLabelPosition=middle;labelBackgroundColor=default;verticalAlign=middle;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png;labelPosition=right;align=left;" vertex="1" parent="1">
-          <mxGeometry x="170" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="fZBfeCPTToNYOZaXe8xz-5" value="release-engine-core" style="shape=image;verticalLabelPosition=middle;labelBackgroundColor=default;verticalAlign=middle;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png;labelPosition=right;align=left;" parent="1" vertex="1">
+          <mxGeometry x="180" y="-50" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="n1wj8ilp30sT0dtZRg4E-43" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#009CCC;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=3;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="n1wj8ilp30sT0dtZRg4E-64" target="AePoLHNEawQoPUJs_e6X-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="-180.20833333333326" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
@@ -290,7 +285,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Copy of 04-Complete scenario" id="lC4PDaXciEGtvL3IPzOy">
-    <mxGraphModel dx="3505" dy="1939" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1850" dy="1421" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="wNWOf4pl7NKcGbTz3ewz-0" />
         <mxCell id="wNWOf4pl7NKcGbTz3ewz-1" parent="wNWOf4pl7NKcGbTz3ewz-0" />
@@ -1294,6 +1289,32 @@
         </mxCell>
         <mxCell id="S_cwWY6O-I9WYi8eMJnc-6" value="&lt;h1 style=&quot;color: rgb(0, 0, 0); margin-top: 0px;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Tokenized ARM/Bicep parameters.json&lt;/span&gt;&lt;/h1&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;A parameter file with the deployment settings.&amp;nbsp;&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Values must be tokenized, so the values for each&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-size: 12px; background-color: initial;&quot;&gt;work/&lt;/span&gt;&lt;span style=&quot;font-size: 12px; background-color: initial;&quot;&gt;environment, are injected during the deployment&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#666600;verticalAlign=top;" vertex="1" parent="1">
           <mxGeometry x="900" y="-210" width="330" height="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="KgJjvkysxKh_4JCJ-3V9" name="Page-11">
+    <mxGraphModel dx="1050" dy="621" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="q-QdXj_qETF4Tge2_b09-3" value="patterns" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="q-QdXj_qETF4Tge2_b09-2" value="patterns" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="q-QdXj_qETF4Tge2_b09-1" value="patterns" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="q-QdXj_qETF4Tge2_b09-4" value="configuration" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="q-QdXj_qETF4Tge2_b09-5" value="pattern" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="q-QdXj_qETF4Tge2_b09-6" value="configuration" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="400" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

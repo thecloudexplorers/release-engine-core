@@ -12,6 +12,7 @@ variables:
 stages:
   - template: /pipelines/01-orchestrators/pattern.orchestrator.yml
     parameters:
+      deploymentSettings: ${{ parameters.deploymentSettings }}
       patternSettings:
         name: resource_group_scope_pattern
         configurationFilePath: ${{ parameters.deploymentSettings.configurationFilePath }}
@@ -34,8 +35,8 @@ stages:
                 resourceGroupName: $(resourceGroupName)
                 subscriptionId: $(subscriptionId)
 
- # This debug stage is optional and can be used to output parameters and variables for troubleshooting purposes
- # The debug stage can be omitted by commenting it out
+  # This debug stage is optional and can be used to output parameters and variables for troubleshooting purposes
+  # The debug stage can be omitted by commenting it out
   - stage: debug_stage_pattern
     displayName: Debug - Pattern Settings
     condition: eq( variables['System.Debug'], 'true' )

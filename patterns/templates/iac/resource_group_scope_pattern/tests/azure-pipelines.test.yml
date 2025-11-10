@@ -8,6 +8,11 @@ trigger:
     include:
       - patterns/templates/iac/resource_group_scope_pattern/**
 
+pr:
+  branches:
+    include:
+      - main
+
 pool: MSHosted-WorkloadsPool
 
 extends:

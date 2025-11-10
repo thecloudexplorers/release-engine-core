@@ -7,11 +7,12 @@ variables:
   # It is used for validate the pipeline run, and will be overridden by the correct SPN of each environment on runtime
   # Can be set on configuration level parameters or as environment variable in the pipeline execution context
   - name: serviceConnection
-    value: IacServiceConnection 
+    value: IacServiceConnection
 
 stages:
   - template: /pipelines/01-orchestrators/pattern.orchestrator.yml
     parameters:
+      deploymentSettings: ${{ parameters.deploymentSettings }}
       patternSettings:
         name: subscription_scope_pattern
         configurationFilePath: ${{ parameters.deploymentSettings.configurationFilePath }}
@@ -20,6 +21,7 @@ stages:
         # Indicates if this is an builtin pattern in the release-engine-core repo
         # Options: "internal" | "external" | "" (empty string)
         patternContext: internal
+        isExternalPattern: false
         configurationPipelineContext: ${{ parameters.deploymentSettings.configurationPipelineContext }}
         stages:
           # It is possible to create stages dynamically, defined at configuration level, currently used for Subscription Vending
@@ -31,14 +33,14 @@ stages:
                 deploymentScope: Subscription
                 serviceConnection: $(serviceConnection)
                 iacMainFileName: subscription_scope_pattern.bicep               
-                iacParameterFileName: /parameters/subscription_scope_pattern.parameters.json
+                iacParameterFileName: subscription_scope_pattern.parameters.json
                 subscriptionId: $(subscriptionId)
                 
                 # Use to override bicep parameters
                 # customBicepParameters: '@{<param name>="$(<param value>)"}'
 
-# This debug stage is optional and can be used to output parameters and variables for troubleshooting purposes
-# The debug stage can be omitted by commenting it out
+  # This debug stage is optional and can be used to output parameters and variables for troubleshooting purposes
+  # The debug stage can be omitted by commenting it out
   - stage: debug_stage_pattern
     displayName: Debug - Pattern Settings
     condition: eq( variables['System.Debug'], 'true' )
