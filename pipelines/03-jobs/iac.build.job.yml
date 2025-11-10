@@ -36,6 +36,8 @@ jobs:
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
 
+              # TODO: Move scripts to a PowerShell Module, so they are not required to be copied 
+              # Copy common scripts from release-engine-core
               - task: CopyFiles@2
                 displayName: Copying common scripts content (external)
                 inputs:
@@ -62,6 +64,8 @@ jobs:
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
                   **/common/scripts/**                
       
+              # TODO: Move scripts to a PowerShell Module, so they are not required to be copied 
+              # Copy common scripts from release-engine-core
               - task: CopyFiles@2
                 displayName: Copying common scripts content (internal)
                 inputs:
@@ -126,6 +130,8 @@ jobs:
                   **/common/scripts/**
                   **${{ parameters.patternSettings.patternArtifactsPath }}/**/*.bicep
                   
+          # TODO: Move scripts to a PowerShell Module, so they are not required to be copied 
+          # Copy common scripts from release-engine-core                  
           - task: CopyFiles@2
             displayName: Copying common scripts content (external)
             inputs:
@@ -136,6 +142,8 @@ jobs:
               TargetFolder: $(build.artifactstagingdirectory)/common/scripts
               flattenFolders: false
 
+      # Debug step to show settings and environment variables
+      # Only runs if System.Debug is set to true
       - powershell: |
           # Shows all configurations for debugging purposes of patternSettings          
           Write-Host "\nParameters:"
@@ -149,6 +157,7 @@ jobs:
         displayName: Debug - Display Settings and Environment Variables
         condition: eq( variables['System.Debug'], 'true' )
 
+      # Gathers files from the configuration repository
       - task: CopyFiles@2
         displayName: Copying Configuration artifacts
         inputs:
@@ -159,6 +168,7 @@ jobs:
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
           flattenFolders: true
 
+      # Gathers IaC files from the pattern repository
       - task: CopyFiles@2
         displayName: Copying IaC artifacts
         inputs:

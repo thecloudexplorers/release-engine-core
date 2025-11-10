@@ -77,8 +77,8 @@ stages:
                 dependsOn: dependent_stage1
                 # lastInStage: true
 
- # This debug stage is optional and can be used to output parameters and variables for troubleshooting purposes
- # The debug stage can be omitted by commenting it out
+  # This debug stage is optional and can be used to output parameters and variables for troubleshooting purposes
+  # The debug stage can be omitted by commenting it out
   - stage: debug_stage_pattern
     displayName: Debug - Pattern Settings
     condition: eq( variables['System.Debug'], 'true' )

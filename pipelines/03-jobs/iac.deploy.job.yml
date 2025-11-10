@@ -25,6 +25,9 @@ jobs:
       runOnce:
         deploy:
           steps:
+
+            # Debug step to show settings and environment variables
+            # Only runs if System.Debug is set to true
             - powershell: |
                 # Shows all configurations for debugging purposes of patternSettings
                 Write-Host "Service Connection: '${{ parameters.jobSettings.stage.infrastructure.iac.serviceConnection }}' "
