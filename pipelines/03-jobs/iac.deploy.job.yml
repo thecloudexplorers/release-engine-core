@@ -32,17 +32,6 @@ jobs:
                 Import-JsonAsEnvironmentVariable -Path '$(patternArtifactsDirectory)/configuration/metadata.jsonc' -ErrorAction Stop
               displayName: Import JSON configuration as environment variables
 
-            # - task: PowerShell@2 #TODO: Move to dedicated task
-            #   displayName: Import JSON configuration as environment variables
-            #   inputs:
-            #     targetType: filePath
-            #     failOnStderr: true
-            #     showWarnings: true
-            #     pwsh: true
-            #     filePath: $(Pipeline.Workspace)/common/scripts/Import-JsonAsEnvironmentVariable.ps1
-            #     arguments: |
-            #       -JsonFilePath '$(patternArtifactsDirectory)/configuration/metadata.jsonc'
-
             # Debug step to show settings and environment variables
             # Only runs if System.Debug is set to true
             - pwsh: |

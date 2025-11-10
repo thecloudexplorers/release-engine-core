@@ -12,7 +12,9 @@
   // Description of the solution, try to be as descriptive as possible
   // Acronym of the solution.
   // Allowed value: [a-z][0-9]{3}
-  "solution_name_abbreviation": "msp",
+  "applicationName": "test-release-engine-core",
+  "applicationAbbreviation": "msp",
+
   // Description of the solution, try to be as descriptive as possible
   "solution_description": "Multi-Stage Deployment Pattern solution.",
   // These are the Landing Zone level injected solution owners
