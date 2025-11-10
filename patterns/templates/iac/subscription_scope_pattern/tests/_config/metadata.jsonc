@@ -1,0 +1,22 @@
+{
+  // Full name of the ADO organization tied to the tenant.
+  "ado_org_name": "thecloudexplorers",
+  // Full name of the area
+  "landing_zone_name": "Azure DevOps Deployment Patterns",
+  // Full name of the solution
+  // Acronym of the landing zone
+  // Allowed value: [a-z][0-9]{3}
+  "landing_zone_name_abbreviation": "adp",
+  // Full name of the solution
+  "solution_name": "Multi-Stage Deployment Pattern",
+  // Description of the solution, try to be as descriptive as possible
+  // Acronym of the solution.
+  // Allowed value: [a-z][0-9]{3}
+  "solution_name_abbreviation": "msp",
+  // Description of the solution, try to be as descriptive as possible
+  "solution_description": "Multi-Stage Deployment Pattern solution.",
+  // These are the Landing Zone level injected solution owners
+  // These users are granted the Owner role on all the security groups part of this solution
+  // Allowed value: UPN
+  "primary_owner": "camargo.wes@gmail.com"
+}

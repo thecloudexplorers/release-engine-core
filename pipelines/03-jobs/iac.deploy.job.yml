@@ -8,13 +8,8 @@ jobs:
   - deployment: workload_deployment_${{ parameters.jobSettings.environment }}
     displayName: Azure Deployment
     environment: ${{ parameters.jobSettings.environment }}
-    variables:
-
-      - ${{ if eq(parameters.patternSettings.configurationPipelineContext,'internal') }}:          
-          - template: ${{ parameters.patternSettings.configurationFilePath }}/metadata.yml
-
-      - ${{ else }}:          
-          - template: ${{ parameters.patternSettings.configurationFilePath }}/metadata.yml@self      
+    variables:       
+      - template: ${{ parameters.patternSettings.configurationFilePath }}/metadata.yml@self
       
       - name: patternArtifactsDirectory        
         value: $(Pipeline.Workspace)/$(deploymentPattern)/      
@@ -25,6 +20,13 @@ jobs:
       runOnce:
         deploy:
           steps:
+            # Import values from json files as environment variables from ${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc
+            # Using Install-Module -Name AzureDevOps.Tools -RequiredVersion 0.4.1-alpha -AllowPrerelease
+            - powershell: |
+                Import-Module AzureDevOps.Tools -RequiredVersion 0.4.1-alpha -AllowPrerelease -Force
+                Import-JsonAsEnvironmentVariables -JsonFilePath '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop
+              displayName: Import JSON configuration as environment variables
+              pwsh: true              
 
             # Debug step to show settings and environment variables
             # Only runs if System.Debug is set to true
