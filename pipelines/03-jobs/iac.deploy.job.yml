@@ -23,7 +23,7 @@ jobs:
             # Import values from json files as environment variables from ${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc
             # Using Install-Module -Name AzureDevOps.Tools -RequiredVersion 0.4.1-alpha -AllowPrerelease
             - powershell: |
-                Import-Module AzureDevOps.Tools -RequiredVersion 0.4.1-alpha -AllowPrerelease -Force
+                Install-Module -Name AzureDevOps.Tools -AllowPrerelease -Force -Scope CurrentUser
                 Import-JsonAsEnvironmentVariables -JsonFilePath '${{ parameters.patternSettings.configurationFilePath }}/metadata.jsonc' -ErrorAction Stop
               displayName: Import JSON configuration as environment variables              
 

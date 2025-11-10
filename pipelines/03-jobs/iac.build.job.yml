@@ -164,6 +164,7 @@ jobs:
           SourceFolder: $(Pipeline.Workspace)/s/checkoutDirectory
           Contents: |
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.json
+            **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.jsonc
             **${{ parameters.deploymentSettings.configurationFilePath }}/**/*.bicepparam
           TargetFolder: $(build.artifactstagingdirectory)/$(deploymentPattern)/configuration
           flattenFolders: true
